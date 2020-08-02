@@ -1,0 +1,109 @@
+/* navbar */
+.router-link-exact-active{
+   border-bottom:2px solid #008BC4;
+   color: #008BC4 !important;
+  
+}
+.siteLogo{
+    width: 4.5vw;
+}
+.btn {
+    background-color: #008BC4;
+}
+.custom-navbar{
+    border-bottom: 2px solid #008BC4;
+}
+
+.index-carousel .slide_Img{
+    height: 100vh;
+    object-fit: cover;
+}
+.overlayBackground{
+    background-color: rgba(0, 0, 0, .7);
+    position: absolute;
+    height: 100vh;
+    min-width: 100vw;
+
+}
+
+.caption-text{
+    color: white;
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: initial;
+}
+
+.caption-text h2{
+    font-size: 350%;
+    border-bottom:2px solid #008BC4;
+    border-block-width: 5%;
+}
+
+.first-row{
+    width: 100%;
+    padding: 4%;
+    background-color: lightslategray;
+    color: white;
+    text-align: center;
+    margin-bottom: 3px;
+    
+}
+
+
+
+
+.second-row{
+    
+    padding: 4%;
+    color:#fff;
+    background-color: #008BC4;
+    text-align: center;
+}
+
+.second-row .fa, .second-row .fas{
+    font-size:5em;
+    color:#fff;
+    border:2px solid #fff;
+    border-radius: 50px;
+    padding:0% 10%;
+}
+
+.second-row .fa:hover, .second-row .fas:hover{
+    background-color:rgba(0,0,0, 0.7);
+    transition: all 2s;
+}
+
+.second-row:nth-child{
+    background-color: black;
+}
+
+
+/* CARRER COMMUNITIES STYLE  */
+
+
+
+
+
+
+
+
+
+
+
+/* ========================================== */
+
+
+/* FOOTER STYLE */
+.footer{
+    z-index: 10;
+}
+.footer-lower{
+    bottom: 0;
+    padding: 5% 0% 3% 0%;
+
+}
+
+.footer-lower p{
+    color:whtie;
+
+}
