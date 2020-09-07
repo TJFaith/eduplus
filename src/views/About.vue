@@ -1,6 +1,8 @@
 <template>
-  <div class="text-primary  about_bg">
-    <div class="col-5 col-sm-1 col-md-1 pt-5" style="position: absolute;padding: 0;margin: 0;width: auto">
+  <div class="text-primary about_bg">
+    <app-header/>
+
+    <div class="col-5 col-sm-1 col-md-1 pt-5 d-none d-lg-block" style="position: absolute;padding: 0;margin: 0;width: auto">
         <div class="line-id"></div>
             <label class="text-light border-danger shadow-lg swing animated" style="font-size: 400%;;margin-left: 10%; font-family: Roboto, sans-serif;position: fixed;top: 50%;">
                 ABOUT US
@@ -10,10 +12,15 @@
         style="height:auto;background-color: rgba(20,19,19,0.97);width: 100vw;padding: 33px; margin-top:50px;background-size: cover;">
         
         <div style="width: 100%;min-width: 100%;max-width: 100%;height: auto;" class="pt-5">
-            <div class="row" style="width: 100%;">
+             <div class="row" style="width: 100%;">
                 <div class="col">
-                    <label class="col-form-label text-center bg-dark shadow d-lg-flex justify-content-lg-center align-items-lg-center bounce animated" style="width: 100%;">COMPANY PROFILE<br></label>
-                    </div>
+            <h2 class="mb-3 text-center d-lg-none">ABOUT US</h2>
+                </div>
+             </div>
+            <div class="row" style="width: 100%;">
+              
+                    <label class="col-form-label w-100 text-center bg-dark shadow d-lg-flex justify-content-lg-center  bounce animated">COMPANY PROFILE<br></label>
+                  
             </div>
             <br/><br/>
             <div class="row" style="width: 100%;">
@@ -61,6 +68,7 @@
 
 
 
+    <app-footer/>
 
 
   </div>

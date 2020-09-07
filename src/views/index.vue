@@ -1,5 +1,7 @@
 <template>
   <div>
+    <app-header/>
+
     <div id="slider1-5" class="carousel slide index-carousel" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#slider1-5" data-slide-to="0" class="active"></li>
@@ -106,6 +108,7 @@
            </div>
             </div>
           </section>
+    <app-footer/>
 
   </div>
 </template>

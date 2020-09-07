@@ -1,6 +1,10 @@
 <template>
   <div>
+    <app-header/>
+    <div>
       
+    </div>
+    <app-footer/>
   </div>
 </template>
 

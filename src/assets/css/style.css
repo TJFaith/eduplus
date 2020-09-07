@@ -1,11 +1,17 @@
 /* navbar */
-.router-link-exact-active{
-   border-bottom:2px solid #008BC4;
-   color: #008BC4 !important;
+/* .router-link-exact-active{
+   /* border-bottom:2px solid #008BC4; */
+   
+
   
+/* } */
+.pushPageDown{
+    margin-top:7%;
 }
 .siteLogo{
-    width: 4.5vw;
+    width: 2.5vw;
+    margin: 0;
+    padding: 0%;
 }
 .btn {
     background-color: #008BC4;
@@ -13,6 +19,15 @@
 .custom-navbar{
     border-bottom: 2px solid #008BC4;
 }
+.navbar{
+  z-index: 200 !important;
+
+}
+.mode{
+  z-index: 9999 !important;
+}
+
+
 
 .index-carousel .slide_Img{
     height: 100vh;
@@ -77,10 +92,68 @@
     background-color: black;
 }
 
+.card-text a:hover{
+    text-decoration: none;
+  }
 
 /* CARRER COMMUNITIES STYLE  */
 
 
+/* DASHBORAD DESIGN */
+.takeAssessBtn{
+    width:100%;
+    border-radius: 0%;
+}
+
+   
+
+
+ /* VUE CSS DESIGN
+ .fade-enter-active, .fade-leave-active{
+     transition: opacity 2s ease-out;
+   }
+   .fade-enter, .fade-leave-to{
+     opacity: 0;
+   } */
+
+.fadePrimary-enter-active, .fadeJunior-enter-active {
+    animation: bounce-in .5s;
+  }
+  .fadePrimary-leave-active, .fadeJunior-leave-active {
+    animation: bounce-in .5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  .count-downTimer{
+    /* //   background-color: gray;
+    //   padding:2%; */
+      width:20vw;
+      border-radius: 5px;
+      font-size: 4em;
+  }
+
+  .activeSide{
+    color:fff;
+      background-color: gray;
+      
+  }
+
+
+/* Result page */
+.mianHeader{
+    padding: 5% 3% 3% 3%;
+    text-align: center;
+}
 
 
 

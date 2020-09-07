@@ -9,7 +9,9 @@ header("Content-Type:multipart/form-data, Access-Control-Allow-Origin:*");
 
 include_once "../database.php";
 include_once "../controller/generalQueryController.php";
+include "../controller/mail.php";
 
+$email = new php_mail();
 $controllerQuery = new generalQueryController();
 
 
@@ -21,7 +23,56 @@ $controllerQuery = new generalQueryController();
         $action = $_GET['action'];
     }
 
-    // API QUERY CONNECTIONS ===============
+    if($action=='AllCertification'){
+        return json_encode($controllerQuery->AllCertification());
+    }
+
+    if($action == 'c_category'){
+        $query = json_decode(file_get_contents("php://input"),true);
+        return json_encode($controllerQuery->c_category($query));
+    }
+
+    if($action == 'sendMail'){
+        $query = json_decode(file_get_contents("php://input"),true);
+        // echo json_encode($query);
+        return json_encode($email->email($query));
+     }
+     
+     
+    // search code
+    if($action =='search_filter'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->search_filter($query));
+    }
+  
+    // Authentication
+    if ($action == 'signup'){
+
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->signup($query));
+    }
+    
+    if ($action == 'login'){
+
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->login($query));
+    }
+
+    if($action == 'google_login'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->google_login($query));
+    }
+
+    if($action =='getUserData'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->getUserData($query));
+    }
+
+    
+    // API QUERY CONNECTIONS =============== -->
+
+    // Career Communities
+   
    
    
 ?>

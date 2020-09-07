@@ -1,15 +1,33 @@
 <template>
-  <div id="app">
-   <app-header></app-header>
-    <div class="pageHight">
-      <router-view/>
-    </div>
-    <app-footer></app-footer>
-  </div>
+  <v-app>
+    <!-- <v-container> -->
+ 
+
+      <router-view></router-view>
+
+     
+
+    <!-- </v-container> -->
+  </v-app>
 </template>
 
-<style>
-  .pageHight{
-    min-height: 100vh;
+<script>
+
+
+export default {
+  data(){
+    return{
+     
+    }
+  },
+  created(){
+    
   }
+};
+</script>
+<style scoped>
+.makeTop{
+  z-index: 500%;
+  position:absolute;
+}
 </style>
