@@ -8,6 +8,9 @@ import index from '../views/index.vue'
 const career_communities =() =>
   import(/* webpackChunkName: "career_communities" */'../views/Career_Communities.vue')
 
+  const career_communitiyFeed =() =>
+  import(/* webpackChunkName: "career_communitiyFeed" */'../views/career_communitiyFeed.vue')
+
 const certification =() =>
   import(/* webpackChunkName: "certification" */'../views/Certification.vue')
 
@@ -91,6 +94,14 @@ Vue.use(VueRouter)
     component: career_communities,
     meta: {
       title: 'Eduplus -- Career Community',
+    }
+  },
+  {
+    path: '/career_Communities/feeds',
+    name: 'c_feeds',
+    component: career_communitiyFeed,
+    meta: {
+      title: 'Eduplus -- Career Community feeds',
     }
   },
   {

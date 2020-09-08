@@ -62,8 +62,8 @@ require('@/assets/dist/js/adminlte.min.js')
 
 // Global variables
 export const bus = new Vue();
-Vue.prototype.$hostname = "http://localhost/MY_WEB_WORKS/eduplus_new/front.eduplus/api/";
-// Vue.prototype.$hostname = 'https://eduplus.sch.ng/api/';
+// Vue.prototype.$hostname = "http://localhost/MY_WEB_WORKS/eduplus_new/front.eduplus/api/";
+Vue.prototype.$hostname = 'https://eduplus.sch.ng/api/';
 
 
 
