@@ -52,14 +52,23 @@ export default {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  display: flex;
 
 }
 .pointer{
  position:absolute;
  right:0;
 transform: translate(-60%,200%);
+}
 
- 
+@media (max-width:576px) {
+  .pointer{
+ position:absolute;
+ right:0;
+ z-index: 100;
+transform: translate(-8rem,-5rem);
+}
+
 }
 .topImg img{
   width:50;
@@ -77,6 +86,7 @@ transform: translate(-60%,200%);
   padding: 5%;
   border-radius: 5px;
   border:2px solid rgba(117, 19, 93, 0.73);
+  margin-right: 2rem;
 }
 /* .headerTXT {
   color:#fff;

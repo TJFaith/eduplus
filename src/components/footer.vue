@@ -1,6 +1,6 @@
 <template>
   <div class="footer">
-            <div class="container-fluid footer-lower bg-dark" >
+            <!-- <div class="container-fluid footer-lower bg-dark" >
             
                 <div class="container">
                     <div class="row">
@@ -45,7 +45,7 @@
                     
                     
                 </div>
-            </div>
+            </div> -->
             <section style="text-align:center;width:100%; background-color:lightgrey;">
                             <br/>
                             <b><span>Copyright  &copy; {{new Date().getFullYear()}} Eduplus - All Rights Reserved /</span>   Developed and maintain by <a href="https://www.tectainet.com">Tectainet Technologies</a></b>
