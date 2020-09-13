@@ -162,5 +162,40 @@ public function getUserData($data){
     // echo User::where('id',$data['user_id'])->get();
 }
 
+// START OF CAREER COMMUNITY METHODS ============================================
+// Image upload processing 
+   // private methods
+   private function imageProcessing(){
+    // upload icon
+if(isset($_FILES['file']['name'])){
+   $name = $_FILES['file']['name'];
+   $target_dir = "upload/";
+   $target_file = $target_dir . basename($_FILES["file"]["name"]);
+ 
+   // Select file type
+   $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+   // Valid file extensions
+   $extensions_arr = array("jpg","jpeg","png","gif");
+
+   // Check extension
+   if( in_array($imageFileType,$extensions_arr) ){
+          
+       // Convert to base64 
+       $image_base64 = base64_encode(file_get_contents($_FILES['file']['tmp_name']) );
+      return $image = 'data:image/'.$imageFileType.';base64,'.$image_base64;
+     }
+
+   }else{
+       return $image = $_POST['c_logo'];
+   } 
+}
+
+private function responseMessage(){
+   $resp = array('response'=>'success');
+   return json_encode($resp);
+}
+// end of image upload processing 
+
 }
 ?>

@@ -11,5 +11,7 @@ export default {
 </script>
 
 <style>
-
+.d{
+  background-image: l;
+}
 </style>

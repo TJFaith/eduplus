@@ -1,12 +1,14 @@
 <template >
   <v-row justify="center" class="mode" >
     <v-dialog v-model="dialog" draggable=""  style='top: 16px' persistent max-width="600px" >
-      <v-card class="mx-auto" flat>
+      <v-card class="mx-auto" text>
         <div class="overlayBG">   
-        <v-img  src="@/assets/images/defaultBanner.jpg" height="200px">
+        
+       <v-img v-if="banner_img_preview" :src="banner_img_preview"   height="200px"/>
+        <v-img v-else  src="@/assets/images/defaultBanner.jpg" height="200px">
       
         <div class="bannerInput">
-        <v-file-input label="Upload community Banner"  class="inputIcon" filled prepend-icon="mdi-camera"></v-file-input>
+        <v-file-input  @change="onFileChange" ref="bannerImage"  label="Upload community Banner"  class="inputIcon" filled prepend-icon="mdi-camera"></v-file-input>
  
         </div>
   
@@ -51,7 +53,7 @@
     <v-text-field  label="Add Community Admin" placeholder="type in email address">
     </v-text-field>
       <div class="input-group-prepend mt-4">
-        <v-btn  flat icon pre><v-icon>mdi-plus</v-icon></v-btn>
+        <v-btn  text icon pre><v-icon>mdi-plus</v-icon></v-btn>
       </div>
 </div>
 
@@ -90,8 +92,8 @@
  
   </v-card>
 <v-col cols="6" sm="6" md="7" lg="7">
-        <v-btn @click="hideDialogMtd()" color="error"  flat class="mr-6"><v-icon>mdi-save</v-icon> Cancel</v-btn>
-        <v-btn  flat><v-icon>mdi-save</v-icon> Save</v-btn>
+        <v-btn @click="hideDialogMtd()" color="error"  text class="mr-6"><v-icon>mdi-save</v-icon> Cancel</v-btn>
+        <v-btn  text><v-icon>mdi-save</v-icon> Save</v-btn>
 
 
   </v-col>
@@ -112,6 +114,7 @@ export default {
             notifications:true,
             sound:true,
             widgets:true,
+            banner_img_preview: null
         }
     },
   
@@ -119,6 +122,36 @@ export default {
          hideDialogMtd(){
          this.dialog = false;
           bus.$emit('hideDialog', this.dialog);
+         },
+
+         onFileChange(e){
+           console.log(e)
+
+      //          let file = e;
+      //          file
+      // //  var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i; 
+      //  var file_type = this.$refs.bannerImage.value
+      //  file_type
+      //  console.log(this.$refs.bannerImage)
+      //  if (!allowedExtensions.exec(file_type)) { 
+      //    this.$refs.bannerImage.value = null;
+      //    this.banner_img_preview = null;
+      //           alert('Invalid file type'); 
+      //           return false; 
+            // } else{
+            //   if(e.size >= 600000){
+            //      this.$refs.file.value = null;
+            //      if(this.banner_img_preview == null){
+            //       this.banner_img_preview = null;
+
+            //      }
+                // alert('Image File is too heavy, it should be less than 500kb')
+              // }else{
+              //   this.banner_img_preview= URL.createObjectURL(file);
+
+              // }
+            // }
+
          }
      },
     created(){

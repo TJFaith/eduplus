@@ -8,6 +8,7 @@ import VueSession from 'vue-session'
 import bootstrap from 'bootstrap-vue'
 import GoogleSignInButton from 'vue-google-signin-button-directive'
 import VueSweetalert2 from 'vue-sweetalert2';
+import VueCoreVideoPlayer from 'vue-core-video-player'
 
 // import $ from "jquery"; 
 
@@ -16,7 +17,7 @@ Vue.use(VueAxios, axios)
 Vue.use(VueSession)
 Vue.use(bootstrap)
 Vue.use(VueSweetalert2)
-
+Vue.use(VueCoreVideoPlayer)
 
 // Vue.use(adminLte)
 
@@ -29,6 +30,7 @@ import sidebar from './components/sidebar.vue'
 import  loader from './components/loader.vue'
 import  timer from './components/timer.vue'
 import  new_comunity from './components/new_comunity.vue'
+import  resourceDialog from './components/resourceDialog.vue'
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -37,7 +39,6 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 import 'animate.css/animate.min.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
-
 
 import vuetify from './plugins/vuetify';
 
@@ -48,6 +49,7 @@ Vue.component('app-sidebar',sidebar)
 Vue.component('app-loader', loader)
 Vue.component('app-timer', timer)
 Vue.component('new-comunity', new_comunity)
+Vue.component('resource-dialog', resourceDialog)
 
 // Include jQuery
 window.$ = window.jQuery = require("jquery");
@@ -55,15 +57,15 @@ window.$ = require('jquery')
 
 require('@/assets/css/style.css')
 require('@/assets/dist/css/adminlte.css')
-// require('@/assets/plugins/jquery/jquery.min.js')
+require('@/assets/plugins/jquery/jquery.min.js')
 require('@/assets/dist/js/adminlte.min.js')
 
 
 
 // Global variables
 export const bus = new Vue();
-Vue.prototype.$hostname = "http://localhost/MY_WEB_WORKS/eduplus_new/front.eduplus/api/";
-// Vue.prototype.$hostname = 'https://eduplus.sch.ng/api/';
+// Vue.prototype.$hostname = "http://localhost/MY_WEB_WORKS/eduplus_new/front.eduplus/api/";
+Vue.prototype.$hostname = 'https://eduplus.sch.ng/api/';
 
 
 

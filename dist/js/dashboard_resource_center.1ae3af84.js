@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["dashboard_resource_center"],{"61a0":function(e,n,r){"use strict";r.r(n);var t=function(){var e=this,n=e.$createElement;e._self._c;return e._m(0)},c=[function(){var e=this,n=e.$createElement,r=e._self._c||n;return r("div",[r("h1",[e._v("resource center")])])}],s={},u=s,a=r("2877"),l=Object(a["a"])(u,t,c,!1,null,null,null);n["default"]=l.exports}}]);
-//# sourceMappingURL=dashboard_resource_center.1ae3af84.js.map

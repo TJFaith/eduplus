@@ -77,17 +77,21 @@
                with font-awesome or any other icon font library -->
             
           <li class="nav-item has-treeview user-panel">
+            <span class="d-flex justify-space-between">
             <a href="#" class="nav-link">
               <i class="nav-icon">
            
                 <img v-if="userData.user_icon" :src="userData.user_icon" class="img-circle elevation-2-small" alt="Icon">
                 <img v-else src="@/assets/images/profiel.png" class="img-circle elevation-2-small" alt="User Image">
                 </i>
-              <p> 
+              <span> 
                   <span class="ml-3">Hi {{userData.name.slice(0, 5)}}</span>
-                <i class="right fas fa-angle-left"></i>
-              </p>
+                <i class="ml-5 right fas fa-angle-left"></i>
+              </span>
             </a>
+           
+              <a class="nav-link d-lg-none d-xl-none d-md-none d-sm-block" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+      </span>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -120,10 +124,10 @@
                 
                 <a href="#" class="nav-link">
                   <i class="nav-icon fa fa-book"></i>
-                  <p>
+                  <span>
                    Assessment
-                   <i class="right fas fa-angle-left"></i>
-                  </p>
+                   <i class="ml-5 right fas fa-angle-left"></i>
+                  </span>
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
@@ -148,8 +152,9 @@
                
                   <i class="nav-icon fa fa-users"></i>
                   <p>Community</p>
-                   <i class="right fas fa-angle-left"></i>
-
+                  <span>
+                   <i class="ml-5 right fas fa-angle-left"></i>
+                </span>
                 </router-link>
                 <ul class="nav nav-treeview">
                       <li class="nav-item">
@@ -167,14 +172,14 @@
         
                     </ul>
               </li>
-
+<!-- 
                <li class="nav-item">
                 <router-link to="/dashboard/dashboard resource center" class="nav-link">
                    <i class="nav-icon fab fa-accusoft"></i>
                   <p>Resource Center</p>
                 </router-link>
               
-              </li>
+              </li> -->
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
