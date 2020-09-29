@@ -29,13 +29,13 @@
 
           <v-divider></v-divider>
 
-          <v-list-item  link >
+          <v-list-item  link v-for="(community, index) in allComunities" :key="index" >
            <v-list-item-avatar>
               <img src="@/assets/images/about.jpg">
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>Biology Community</v-list-item-title>
+              <v-list-item-title>{{community.community_name}}</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
 
@@ -131,7 +131,20 @@ export default {
   data(){
     return{
       show:false,
-      login:true
+      login:true,
+      allComunities:{}
+    }
+  },
+  methods:{
+       getComunity(){
+             
+        this.axios.get(this.$hostname+"general_api.php?action=getComunity").then((response)=>{
+        console.log(response.data) 
+          this.allComunities=response.data
+         console.log(this.allComunities)
+               }).catch(error=>{
+          alert(error)
+         })
     }
   },
     computed: {
@@ -141,7 +154,7 @@ export default {
 
 },
 created(){
-    console.log(this.mini)
+    this.getComunity()
 }
 }
 </script>

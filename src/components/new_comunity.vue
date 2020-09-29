@@ -72,7 +72,6 @@
           :rules="imputRules.description"
         ></v-textarea>
       </v-card-text>
-
    <v-card-text >
        <v-col cols="12" sm="12" md="12">       
         <div class="input-group">
@@ -96,22 +95,24 @@
  
             <v-list-item-title>
               
-              <span v-if="!editAdmin && editAdmin != index">
+              <span v-if="editAdmin != index">
               {{community_email.email}}<small class="ml-2"><i>{{community_email.status}}</i></small>
               </span>
             
                 <div class="input-group" v-if="editAdmin == index" :id="index">
-                  <v-text-field :rules="imputRules.email" v-model="newAdminEmail" clearable label="Add Community Admin" placeholder="type in email address">
+                  <v-text-field :rules="imputRules.email" v-model="community_email.email" clearable label="Add Community Admin" placeholder="type in email address">
                   </v-text-field>
               <div class="input-group-prepend mt-4">
-                <v-btn  text icon pre><v-icon color="success">fa fa-check</v-icon></v-btn>
-                <v-btn  text icon pre><v-icon color="error">fa fa-trash</v-icon></v-btn>
+                
+                <v-btn @click="updateAdmin(community_email.email, community_email.id,  community_email.community_id)"  text icon pre><v-icon color="success">fa fa-check</v-icon></v-btn>
+
+                <v-btn @click="confirmDelete(community_email.email, community_email.id, community_email.community_id)"  text icon pre><v-icon color="error">fa fa-trash</v-icon></v-btn>
               </div>
            </div>
 
 
               </v-list-item-title>
-            <v-list-item-icon @click="editAdmin = index "><v-icon>fas fa-edit</v-icon></v-list-item-icon>
+            <v-list-item-icon @click="toggleEdit(index)"><v-icon>fas fa-edit</v-icon></v-list-item-icon>
           
           </v-list-item>
 
@@ -186,10 +187,9 @@ import {bus} from '../main';
 export default {
     data(){
         return{
-          toggle:false,
-          feedbackMessage:'',
-          updatData:false,
-          file:null,
+            feedbackMessage:'',
+            updatData:false,
+            file:null,
             show:false,
             opacity:0,
             dialog:true,
@@ -212,8 +212,11 @@ export default {
         }
     },
     computed:{
-
+      
     },
+ 
+      
+  
      methods:{
          hideDialogMtd(){
          this.dialog = false;
@@ -246,7 +249,7 @@ export default {
 
                 }else{
                   this.community_data.banner=e
-                  console.log(this.$refs.icon)
+                 
                    this.banner_img_preview= URL.createObjectURL(e);
                    
                 }
@@ -304,14 +307,105 @@ export default {
                })
            
              this.newAdminEmail =""
-             console.log(this.community_data.email)
+       
           }
           }
         
             
         },
+
+        singleData(){
+        
+      if(this.$route.params.community_id != undefined){
+        this.updatData = true;
+     let communityID={'c_id':this.$route.params.community_id}
+      this.axios.post(this.$hostname+"general_api.php?action=singleCommunity", communityID).then((response)=>{
+            // this.communityDATA=response.data
+          
+            this.community_data.title = response.data.com_data[0].community_name
+            this.community_data.description= response.data.com_data[0].community_description
+            this.community_data.email = response.data.com_admin
+
+            // this.community_data.email = response.data.com_data[0].email
+            // :'', banner:[], email:[]},
+
+          }).catch(error=>{
+            alert(error)
+          })
+      }
+      },
+    toggleEdit(index){
+      // alert(index)
+      // alert(this.editAdmin)
+      if(this.editAdmin == null){
+        this.editAdmin = index
+      }else if(this.editAdmin == index){
+        this.editAdmin = null
+      }else if(this.editAdmin != index){
+        this.editAdmin = index
+      }
+    },
+      topAlert(){
+           this.$swal.fire({
+                icon:'success',
+                title:'Email deleted',
+                                  toast: true,
+                                  position: 'top-end',
+                                  showConfirmButton: false,
+                                  timer: 3000,
+                                  timerProgressBar: true,
+                                  didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', this.$swal.stopTimer)
+                                    toast.addEventListener('mouseleave', this.$swal.resumeTimer)
+                                }
+         })
+      },
+      
+        // delete admin
+         confirmDelete(adminEmail, id, c_id){
+          this.$swal.queue([{
+            title: 'Are you sure you want to delete'+adminEmail+' from admin list',
+            text:id,
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Delete',
+            showLoaderOnConfirm: true,
+            allowOutsideClick:false,
+            preConfirm: () => {
+                
+                      let adminData={'id':id, 'c_id':c_id}
+                      this.axios.post(this.$hostname+"general_api.php?action=deleteAdmin", adminData).then((response)=>{
+                          if (response.data.response == 'success'){
+                              this.singleData()
+                               this.topAlert()
+                              }
+                          }).catch(error=>{
+                            alert(error)
+                          })
+                    
+            }
+          }])
+          },
+          // updateAdmin
+          updateAdmin(adminEmail, id, c_id){
+                let adminData={'id':id, 'adminEmail':adminEmail,  'c_id':c_id}
+          
+                this.axios.post(this.$hostname+"general_api.php?action=updateAdmin", adminData).then((response)=>{
+                  
+                 
+                  if(response.data.response =='success'){
+                    this.singleData()
+                     this.topAlert()
+                     this.editAdmin=null
+
+                  }
+                  }).catch(error=>{
+                    alert(error)
+                  })
+            
+          },
          saveCommunityData(){
-           alert(this.updatData)
+       
           //  if(this.$refs.comunityForm.validate()){
              this.showLoading = true
 
@@ -320,7 +414,6 @@ export default {
               this.community_data.user_id = this.$session.get('user_login').id
             if(this.updatData == false){
               this.axios.post(this.$hostname+"general_api.php?action=newComunity", this.community_data).then((response)=>{
-         
                if (response.data.response == 'success'){
                 //  reset form
                 this.feedbackMessage = 'Community Created Successfuly'
@@ -340,6 +433,8 @@ export default {
 
               this.axios.post(this.$hostname+"general_api.php?action=updateComunity", this.community_data).then((response)=>{
                this.showLoading = false;
+              
+
               if (response.data.response == 'success'){
                 //  reset form
                 this.feedbackMessage = 'Community Updated Successfuly'
@@ -365,28 +460,12 @@ export default {
             return fd;
         },
 
-
+// community admins
      },
+    
     created(){
-      
-      if(this.$route.params.community_id != undefined){
-        this.updatData = true;
-     let communityID={'c_id':this.$route.params.community_id}
-      this.axios.post(this.$hostname+"general_api.php?action=singleCommunity", communityID).then((response)=>{
-            // this.communityDATA=response.data
-            console.log(response.data)
-            this.community_data.title = response.data.com_data[0].community_name
-            this.community_data.description= response.data.com_data[0].community_description
-            this.community_data.email = response.data.com_admin
-
-            // this.community_data.email = response.data.com_data[0].email
-            // :'', banner:[], email:[]},
-
-          }).catch(error=>{
-            alert(error)
-          })
-      }
-
+     
+      this.singleData()
     }
 }
 </script>

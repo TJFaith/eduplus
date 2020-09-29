@@ -94,6 +94,16 @@ $controllerQuery = new generalQueryController();
         $query = json_decode(file_get_contents('php://input'),true);
         return json_encode($controllerQuery->updateComunity($query));
     }
+
+    if($action =='deleteAdmin'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->deleteAdmin($query));
+    }
+
+    if($action=='updateAdmin'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->updateAdmin($query));
+    }
     // API QUERY CONNECTIONS =============== -->
 
     // Career Communities

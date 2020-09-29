@@ -21,7 +21,15 @@
               </div>
             </div>
               <router-link to="/career_Communities/feeds">
-              <v-icon class="pointer animated pulse" color="white" size=100>fa fa-angle-double-right</v-icon>
+             
+                <div  class="pointer">
+
+               
+              <span class="white--text font-weight-medium">VIEW COMMUNITY</span>
+              <v-icon class="animated pulse" color="white" size=100>fa fa-angle-double-right</v-icon>
+ </div>
+            
+
             </router-link>
           </div>
         </div>
@@ -32,7 +40,11 @@
 
 <script>
 export default {
-
+  data(){
+    return{
+      valid:false
+    }
+  }
 }
 </script>
 
@@ -58,7 +70,8 @@ export default {
 .pointer{
  position:absolute;
  right:0;
-transform: translate(-60%,200%);
+transform: translate(-2vw,41vh);
+
 }
 
 @media (max-width:576px) {

@@ -252,17 +252,30 @@ try{
         'community_name'        =>  $data['title'],
         'community_owner'       =>  $data['communityOwner'],
         'community_description' =>  $data['description'],
+        'created_at'            => date('Y-m-d H:i:s'),
+        'updated_at'            => date('Y-m-d H:i:s')
         
 ]);
 
 foreach ($data['email'] as $adminEmail) {
-    community_admin_member::where('community_id',$data['community_id'])->update([
+    if(isset($adminEmail['id'])){
+    community_admin_member::where('id',$adminEmail['id'])->where('community_id',$adminEmail['community_id'])->update([
         'email'             => $adminEmail['email'],
         'status'            => $adminEmail['status'],
         'created_at'        => date('Y-m-d H:i:s'),
         'updated_at'        => date('Y-m-d H:i:s')
 
     ]);
+    }else if(!isset($adminEmail['id'])){
+        community_admin_member::insert([
+            'email'             => $adminEmail['email'],
+            'community_id'      => $data['community_id'],
+            'status'            => $adminEmail['status'],
+            'created_at'        => date('Y-m-d H:i:s'),
+            'updated_at'        => date('Y-m-d H:i:s')
+    
+        ]);
+    }
 }
 
     echo $this->responseMessage();
@@ -273,9 +286,8 @@ foreach ($data['email'] as $adminEmail) {
 
 public function getComunity($data){
     $community_arr    =   array();
-
+    if(isset($data['user_id'])){
     $getComunity_id = community_admin_member::select('user_id','email','community_id')->where('user_id',$data['user_id'])->get();
-    
     foreach ($getComunity_id as $c_id) {
         if ($c_id->user_id != null && $c_id->email != null){
         $getCommunity = community::where('community_id',$c_id->community_id)->get();
@@ -287,6 +299,14 @@ public function getComunity($data){
     }
     
    echo json_encode($community_arr);
+
+    }else if(!isset($data['user_id'])){
+       $getCommunity = community::latest()->get();
+       echo json_encode($getCommunity);
+        
+    }
+    
+   
     
 }
 
@@ -318,5 +338,30 @@ public function deleteCommunity($data){
     community_admin_member::where('community_id',$data['c_id'])->delete();
 }
 
+public function deleteAdmin($data){
+    try{
+    community_admin_member::where('community_id',$data['c_id'])->where('id',$data['id'])->delete();
+    echo $this->responseMessage();
+    }catch(Exception $e){
+        return json_encode('Ops! sorry an error occured');
+    }
 }
+
+public function updateAdmin($data){
+    try{
+        community_admin_member::where('community_id',$data['c_id'])->where('id',$data['id'])->update([
+                'email'             => $data['adminEmail'],
+                'created_at'        => date('Y-m-d H:i:s'),
+                'updated_at'        => date('Y-m-d H:i:s')
+            ]);
+
+  
+        echo $this->responseMessage();
+        }catch(Exception $ex){
+            return json_encode('Ops! sorry an error occured');
+        }
+    }
+}
+
+
 ?>
