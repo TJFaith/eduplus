@@ -9,11 +9,23 @@ use Models\user;
 USE Models\certification;
 use Models\certification_category;
 use Models\community;
+use Models\community_admin_member;
 use Models\community_data;
 use Models\user_data;
 
 class generalQueryController
 {
+        // Generate id
+        private function generateId(){
+            // CODE TO GENERATE ID
+             $token = 'qwertzuiopasdfghjklyxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ123456789abcdefghijklmnopqrstuvwxyz';
+             $token = str_shuffle($token);
+             $token = substr($token,  0,  2);
+             $current_date = date('Ymd');
+             return $token = $token.$current_date;
+         }
+
+         
     // CERTIFICATION
     public function AllCertification(){
         echo certification::orderBy('ID','DESC')->get();
@@ -178,7 +190,7 @@ if(isset($_FILES['file']['name'])){
    // Valid file extensions
    $extensions_arr = array("jpg","jpeg","png","gif");
 
-   // Check extension
+   //        Check extension
    if( in_array($imageFileType,$extensions_arr) ){
           
        // Convert to base64 
@@ -195,7 +207,116 @@ private function responseMessage(){
    $resp = array('response'=>'success');
    return json_encode($resp);
 }
+
 // end of image upload processing 
+public function newComunity($data){
+    // Insert record
+    $community_ID = 'con_'.$this->generateId();
+    $community = new community;
+    $community -> community_id = $community_ID ;
+    $community -> community_name = $data['title'];
+    $community -> community_owner = $data['communityOwner'];
+    // $community -> community_icon = $this->imageProcessing(); 
+    $community -> community_description	 = $data['description'];
+    // $community -> community_cover_image = $this->imageProcessing();
+    $community -> save();
+    
+    // save admins
+    community_admin_member::insert([
+        'user_id'           =>  $data['user_id'],
+        'email'             =>  $data['communityOwner'],
+        'community_id'      => $community_ID,
+        'status'            => 'owner',
+        'created_at'        => date('Y-m-d H:i:s'),
+        'updated_at'        => date('Y-m-d H:i:s')
+
+        ]);
+        // echo json_encode($data['email']);
+    foreach ($data['email'] as $adminEmail) {
+    community_admin_member::insert([
+        'email'             => $adminEmail['email'],
+        'community_id'      => $community_ID,
+        'status'            => $adminEmail['status'],
+        'created_at'        => date('Y-m-d H:i:s'),
+        'updated_at'        => date('Y-m-d H:i:s')
+
+    ]);
+    }
+    echo $this->responseMessage();
+        // echo json_encode($data);
+}
+public function updateComunity($data){
+try{
+    community::where('community_id',$data['community_id'])->update([
+
+        'community_name'        =>  $data['title'],
+        'community_owner'       =>  $data['communityOwner'],
+        'community_description' =>  $data['description'],
+        
+]);
+
+foreach ($data['email'] as $adminEmail) {
+    community_admin_member::where('community_id',$data['community_id'])->update([
+        'email'             => $adminEmail['email'],
+        'status'            => $adminEmail['status'],
+        'created_at'        => date('Y-m-d H:i:s'),
+        'updated_at'        => date('Y-m-d H:i:s')
+
+    ]);
+}
+
+    echo $this->responseMessage();
+    }catch(Exception $e){
+        return json_encode('Ops! sorry an error occured');
+    }
+}
+
+public function getComunity($data){
+    $community_arr    =   array();
+
+    $getComunity_id = community_admin_member::select('user_id','email','community_id')->where('user_id',$data['user_id'])->get();
+    
+    foreach ($getComunity_id as $c_id) {
+        if ($c_id->user_id != null && $c_id->email != null){
+        $getCommunity = community::where('community_id',$c_id->community_id)->get();
+        array_push($community_arr, array(   
+            $getCommunity
+        ));
+    }
+
+    }
+    
+   echo json_encode($community_arr);
+    
+}
+
+// private $c_id;
+// individual community
+public function singleCommunity($data){
+   
+    $com_data = community::where('community_id',$data['c_id'])->get();
+    $com_member = community_admin_member::where('community_id',$data['c_id'])
+    ->whereNotNull('user_id')
+    ->count();
+       $c_id = $data['c_id'];
+  
+    $com_admin = community_admin_member::where(function ($query) use ($c_id){
+        $query->where('community_id', $c_id)->where('status','admin');
+     })->orWhere(function ($query) use ($c_id){
+         $query->where('community_id', $c_id)->where('status','pending admin');
+     })->get();
+    
+    echo json_encode(array(
+        'com_data'=>$com_data,
+        'com_admin'=>$com_admin,
+        'total_member'=>$com_member
+    ));
+}
+
+public function deleteCommunity($data){
+    community::where('community_id',$data['c_id'])->delete();
+    community_admin_member::where('community_id',$data['c_id'])->delete();
+}
 
 }
 ?>

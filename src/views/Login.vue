@@ -79,7 +79,7 @@ export default {
             showLoading:false,
             login_data:{},
             login_response:'',
-             clientId: '339735205850-oc0pamnamh5s68e53h14sgl6v9ncvefv.apps.googleusercontent.com'
+             clientId: '444741050365-iv78pe1mmrkbll31t888vpvundu44phg.apps.googleusercontent.com'
 
         }
     },

@@ -53,7 +53,6 @@ $controllerQuery = new generalQueryController();
     }
     
     if ($action == 'login'){
-
         $query = json_decode(file_get_contents('php://input'),true);
         return json_encode($controllerQuery->login($query));
     }
@@ -68,7 +67,33 @@ $controllerQuery = new generalQueryController();
         return json_encode($controllerQuery->getUserData($query));
     }
 
+    if($action == 'newComunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        // $name = $_FILES['imgfile']['name'];
+        // echo json_encode($query);
+        return json_encode($controllerQuery->newComunity($query));
+    }
+
+    if($action =='getComunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->getComunity($query));
+
+    }
+
+    if($action =='singleCommunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->singleCommunity($query));
+    }
     
+    if($action =='deleteCommunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->deleteCommunity($query));
+    }
+
+    if($action == 'updateComunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->updateComunity($query));
+    }
     // API QUERY CONNECTIONS =============== -->
 
     // Career Communities

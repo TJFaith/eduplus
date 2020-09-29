@@ -169,7 +169,7 @@
                           <p>New Community</p>
                         </router-link>
                       </li>
-        
+                    
                     </ul>
               </li>
 <!-- 
