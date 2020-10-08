@@ -2,25 +2,45 @@
   <div>
     <app-header/>
       <div>
-        <div class="container-fluid mt-16">
+        <div class="container-fluid mt-16" style="border:2px solid red">
           <div class="row toprow">
-            <div class="headerTXT">
+            <div class="headerTXT col-md-4">
               <h6>JOIN A</h6>
               <h1><b>CAREER COMMUNITY</b></h1>
               <div class="search">
-                <v-form v-model="valid" class="searchComunity">
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12" md="12" >
-                        <v-text-field color="white" label="Search Community" prepend-icon="fa fa-search"></v-text-field>
-                        <v-select label="Select Community" color="white" dense ></v-select>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-form>
+            
+                 
+                        <v-text-field color="white" label="Search Community" v-model="searchTXT" @keyup="searchCommunity" @keyup.enter="searchCommunity" prepend-icon="fa fa-search"></v-text-field>
+                  
               </div>
             </div>
-              <router-link to="/career_Communities/feeds">
+            <div class="col-md-6">
+             
+             <div class="search_result">
+                <v-list-item :to="{ name: 'generalSingleCommunity', params: { community_id: community.community_id }}" link class="bg-white mb-3 p-2" v-for="(community, index) in allComunities" :key="index">
+               
+                   <v-list-item-avatar  class="rounded-circle userIcon" size="40" tile >
+                    <v-img  src="@/assets/images/about.jpg"></v-img>
+                  </v-list-item-avatar>
+                  <v-list-item-content>
+                <span class="mx-2">{{community.community_name}}</span>
+                <div>
+                <small ><v-icon class="mx-2" small>fa fa-users</v-icon>2,000</small>
+                </div>
+                </v-list-item-content>
+                
+       </v-list-item>
+       <div style="text-align:center"  v-if="showLoading">
+         <v-progress-circular color="white"  :size="100"  indeterminate></v-progress-circular>
+       </div>
+       <v-card class="p-4 text-center" color="red--text" v-if="allComunities.length == 0">
+         NO RESULT FOUND FOR "<b>{{searchTXT.toUpperCase()}}</b>"
+       </v-card>
+       
+        
+             </div>
+            </div>
+              <router-link to="/career_Communities/home">
              
                 <div  class="pointer">
 
@@ -42,7 +62,33 @@
 export default {
   data(){
     return{
-      valid:false
+      valid:false,
+      searchTXT:'',
+      joinGroup:true,
+      allComunities:{},
+      showLoading:false
+    }
+  },
+  methods:{
+    searchCommunity(){
+      this.showLoading = true
+      if(this.searchTXT != ''){
+      let searchWork={'searchWord':this.searchTXT}
+        this.axios.post(this.$hostname+"general_api.php?action=searchComunity", searchWork).then((response)=>{
+      
+        this.allComunities= response.data
+      this.showLoading = false
+        
+               }).catch(error=>{
+      this.showLoading = false
+
+          alert(error)
+         })
+      }else if (this.searchTXT == ''){
+        this.allComunities ={}
+      this.showLoading = false
+
+      }
     }
   }
 }

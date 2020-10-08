@@ -104,6 +104,31 @@ $controllerQuery = new generalQueryController();
         $query = json_decode(file_get_contents('php://input'),true);
         return json_encode($controllerQuery->updateAdmin($query));
     }
+
+   
+    if($action=='searchComunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->searchComunity($query));
+    }
+
+    if($action=='newPost'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->newPost($query));
+    }
+
+    if($action=='joinCommunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->joinCommunity($query));
+    }
+    
+    if($action=='leaveCommunity'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->leaveCommunity($query));
+    }
+    if($action=='allPost'){
+        return json_encode($controllerQuery->allPost());
+    }
+  
     // API QUERY CONNECTIONS =============== -->
 
     // Career Communities

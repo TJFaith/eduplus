@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["dashboard_resource_center"],{4126:function(e,n,t){"use strict";var r=t("5f8d"),c=t.n(r);c.a},"5f8d":function(e,n,t){},"61a0":function(e,n,t){"use strict";t.r(n);var r=function(){var e=this,n=e.$createElement;e._self._c;return e._m(0)},c=[function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[t("h1",[e._v("resource center")])])}],u={},s=u,a=(t("4126"),t("2877")),o=Object(a["a"])(s,r,c,!1,null,null,null);n["default"]=o.exports}}]);
+//# sourceMappingURL=dashboard_resource_center.a8102b9a.js.map

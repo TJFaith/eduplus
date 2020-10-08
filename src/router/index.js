@@ -8,8 +8,11 @@ import index from '../views/index.vue'
 const career_communities =() =>
   import(/* webpackChunkName: "career_communities" */'../views/Career_Communities.vue')
 
-  const career_communitiyFeed =() =>
-  import(/* webpackChunkName: "career_communitiyFeed" */'../views/career_communitiyFeed.vue')
+  const career_community_layout =() =>
+  import(/* webpackChunkName: "career_community_layout" */'../views/career_community_layout.vue')
+
+  const career_home=() =>
+  import(/*webpackChunkName: "career_home" */'../views/career_home.vue')
 
 const certification =() =>
   import(/* webpackChunkName: "certification" */'../views/Certification.vue')
@@ -97,12 +100,24 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/career_Communities/feeds',
+    path: '/career_Communities/home',
     name: 'c_feeds',
-    component: career_communitiyFeed,
+    component: career_community_layout,
     meta: {
       title: 'Eduplus -- Career Community feeds',
-    }
+    },
+    children:[
+      {
+        path:'/career_Communities/home',
+        name:'career_home',
+        component:career_home
+      },
+      {
+        path: '/community/:community_id/',
+        name: 'generalSingleCommunity',
+        component: singleCommunity
+      }
+    ]
   },
   {
     path: '/about',

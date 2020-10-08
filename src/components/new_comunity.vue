@@ -7,7 +7,7 @@
        </v-btn>
        
       <v-card class="mx-auto" text>
-          <form ref="comunityForm" >
+          <form ref="comunityForm" @submit.prevent="saveCommunityData()">
         <div class="overlayBG">   
             
         
@@ -121,7 +121,7 @@
    </v-card-text>
 <v-col cols="12" sm="12" md="12" lg= "7">
         <v-btn @click="hideDialogMtd()" color="error" :disabled="showLoading"  class="mr-6"><v-icon>mdi-save</v-icon> Cancel</v-btn>
-        <v-btn  @click="saveCommunityData()" color="primary">
+        <v-btn type="submit" color="primary">
           <span v-if="!showLoading">
            <v-icon>mdi-save</v-icon> Save
             </span>

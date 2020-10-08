@@ -19,9 +19,9 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="/career_Communities" class="nav-link">Career Communities</a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
+      <!-- <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Resource Center</a>
-      </li>
+      </li> -->
       <li class="nav-item d-none d-sm-inline-block">
           <a href="/certification" class="nav-link">Certification</a>
       </li>

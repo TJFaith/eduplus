@@ -305,9 +305,6 @@ public function getComunity($data){
        echo json_encode($getCommunity);
         
     }
-    
-   
-    
 }
 
 // private $c_id;
@@ -325,12 +322,66 @@ public function singleCommunity($data){
      })->orWhere(function ($query) use ($c_id){
          $query->where('community_id', $c_id)->where('status','pending admin');
      })->get();
-    
+
+     $allPost = array();
+     $allMembers = community_admin_member::whereNotNull('user_id')->get();
+
+    //  CODE FOR NEW POST
+    // get all post
+     $comData =community_data::where('community_id',$data['c_id'])->latest()->get();
+  
+     
+     foreach ($comData as $posData) {
+        $userData = user::where('id', $posData->member_id)->get();
+        foreach ($userData as $uDATA) {
+            array_push($allPost, array(   
+                "member_id"=>$uDATA->id,
+                'member_icon'=>$uDATA->user_icon,
+                'member_name'=>$uDATA->name,
+                'community_id'=>$posData->community_id,
+                'text_caption'=>$posData->text_caption,
+            ));
+        }
+       
+
+     }
+    //  get poster data
+    //  $allPost = json_encode(array(
+    //      ''
+    //  });
     echo json_encode(array(
         'com_data'=>$com_data,
         'com_admin'=>$com_admin,
-        'total_member'=>$com_member
+        'total_member'=>$com_member,
+        'allMembers'=>$allMembers,
+        'allPost'=>$allPost
     ));
+}
+// all post
+public function allPost(){
+    $postData = array();
+    $comData =community_data::latest()->get();
+    foreach ($comData as $comData) {
+        
+         // get community info
+       $comInfo = community::where('community_id',$comData->community_id)->get();
+       $userInfo = user::where('id', $comData->member_id)->get();
+    //   echo json_encode($comInfo);
+       foreach ($comInfo as $comInfo) {
+           foreach ($userInfo as $userInfo) {
+            array_push($postData, array(   
+                'community_id'=>$comInfo->community_id,
+                'community_name'=>$comInfo->community_name,
+                'text_caption'=>$comData->text_caption,
+                'member_name'=>$userInfo->name,
+                'member_id' => $comData->member_id,
+             ));
+           }
+      
+       }
+    }
+    echo json_encode($postData);
+
 }
 
 public function deleteCommunity($data){
@@ -361,6 +412,61 @@ public function updateAdmin($data){
             return json_encode('Ops! sorry an error occured');
         }
     }
+public function searchComunity($data){
+    try{
+        echo json_encode(community::where('community_name', 'LIKE', '%'.$data['searchWord'].'%')
+                        ->orWhere('community_id',$data['searchWord'])
+                        ->get());
+    }catch(Exception $ex){
+        return json_encode('Ops! sorry and error occured');
+    }
+}
+
+public function newPost($data){
+    try{
+        // community_data
+        $community_data = new community_data;
+        $community_data -> community_id = $data['community_id'];
+        $community_data -> member_id = $data['member_id'];
+        $community_data -> text_caption = $data['data'];
+      
+        if($community_data -> save()){
+                       echo $this->responseMessage();
+        }
+    }catch(Exception $ex){
+        return json_encode('Ops! sorry and error occured');
+    }
+}
+
+public function joinCommunity($data){
+    $joinCommunity = new community_admin_member;
+    $joinCommunity -> user_id = $data['user_id'];
+    $joinCommunity -> email = $data['user_email'];
+    $joinCommunity -> community_id = $data['community_id'];
+    $joinCommunity -> status = 'member';
+    if($joinCommunity -> save()){
+        echo $this->responseMessage();
+    }else{
+        return json_encode('Ops! sorry an error occured');
+
+    }
+} 
+
+public function leaveCommunity($data){
+    try{
+    $exitcom = community_admin_member::where('community_id',$data['community_id'])->where('user_id',$data['user_id'])->where('email',$data['user_email'])->delete();
+        
+    if($exitcom){
+        echo $this->responseMessage();
+    }else{
+        return json_encode('Ops! sorry an error occured');
+
+    }
+}catch(Exception $err){
+    return json_encode('Ops! sorry an error occured');
+
+}
+} 
 }
 
 

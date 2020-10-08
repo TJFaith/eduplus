@@ -100,7 +100,13 @@ export default {
                     this.$session.start()
                     this.$session.set('user_login', response.data.user_data[0])
                     bus.$emit('login_status', {'login_status':true, 'user_id':response.data.user_data[0].id, 'user_name':response.data.user_data[0].name});
-                    window.location = '/dashboard'; 
+                     if(this.$session.has('postPage')){
+                  window.location = this.$session.get('postPage')
+                  this.$session.remove('postPage')
+              }else{
+              window.location = '/dashboard'; 
+
+              }
             this.showLoading = false;
 
                     // this.$router.push({path:'/dashboard'})
@@ -131,7 +137,7 @@ export default {
         login(){
             this.showLoading = true;
             this.axios.post(this.$hostname+"general_api.php?action=login", this.login_data).then((response)=>{
-              
+       
                 if(response.data.respond !='success'){
                     this.showLoading = false;
                 this.login_response = response.data.respond
@@ -140,7 +146,13 @@ export default {
                  this.$session.start()
                  this.$session.set('user_login', response.data.user_data[0])
                  bus.$emit('login_status', {'login_status':true, 'user_id':response.data.user_data[0].id, 'user_name':response.data.user_data[0].name});
+              if(this.$session.has('postPage')){
+                  window.location = this.$session.get('postPage')
+                  this.$session.remove('postPage')
+              }else{
               window.location = '/dashboard'; 
+
+              }
             this.showLoading = false;
 
                 // this.$router.push({path:'/dashboard'})
