@@ -108,7 +108,8 @@ Vue.use(VueRouter)
     },
     children:[
       {
-        path:'/career_Communities/home',
+      
+        path:'/career_Communities/home/:startRange/:endRange',
         name:'career_home',
         component:career_home
       },

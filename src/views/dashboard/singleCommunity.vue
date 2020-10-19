@@ -1,7 +1,11 @@
 <template>
 <div>
   <v-row>
+    <div style="text-align:center; min-height:100vh" class="w-100"  v-if="showLoading">
+         <v-progress-circular color="black"  :size="100"  indeterminate></v-progress-circular>
+       </div>
     <v-card class="mx-auto w-100" flat v-for="(communityData, index) in communityDATA.com_data" :key="index">
+    
     <v-img  src="@/assets/images/about.jpg" height="200px"></v-img>
      <v-avatar  class="float-right rounded-circle groupIcon" size="130" tile >
                     <v-img  src="@/assets/images/about.jpg"></v-img>
@@ -28,17 +32,17 @@
           </small>
     </v-btn>
 
-      <v-btn class="mx-2" fab dark small color="primary">
+      <!-- <v-btn class="mx-2" fab dark small color="primary">
       <v-icon dark>
         mdi-image
       </v-icon>
-    </v-btn>
+    </v-btn> -->
 
-        <v-btn class="mx-2" fab dark small color="primary">
+        <!-- <v-btn class="mx-2" fab dark small color="primary">
       <v-icon dark>
         mdi-video
       </v-icon>
-    </v-btn>
+    </v-btn> -->
     </div>
     <div v-else>
       <v-btn class="mx-2" @click="joinCommunity(communityData.community_name)"  color="primary">
@@ -150,16 +154,19 @@ export default {
       dialog:false,
       newPost:'',
       login_status:false,
-      a_member:false
+      a_member:false,
+      showLoading:false,
     }
   },
   methods:{
     getID(){
+      this.showLoading=true
      let communityID={
        'c_id':this.$route.params.community_id
        }
     
       this.axios.post(this.$hostname+"general_api.php?action=singleCommunity", communityID).then((response)=>{
+            this.showLoading= false;
             this.communityDATA=response.data
            
 
@@ -185,6 +192,8 @@ export default {
       }
 
           }).catch(error=>{
+            this.showLoading= false;
+
             alert(error)
           })
 

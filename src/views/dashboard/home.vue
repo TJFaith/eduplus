@@ -106,7 +106,6 @@
           
         this.axios.post(this.$hostname+"general_api.php?action=getUserData", userinfo).then((response)=>{
              this.topRowData = response.data;
-             console.log(response)
             }).catch(error=>{
                 alert(error)
             })

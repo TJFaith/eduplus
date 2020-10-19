@@ -1,6 +1,9 @@
 <template>
 <div>
-   <v-card max-width="67vw" v-for="(postData, index) in postData" :key="index">
+  <div style="text-align:center; min-height:100vh"  v-if="showLoading">
+         <v-progress-circular color="black"  :size="100"  indeterminate></v-progress-circular>
+       </div>
+   <v-card class="mb-5" max-width="67vw" v-for="(postData, index) in postData" :key="index">
        
        <v-card-text class="p-3 bg-black" >
           <v-avatar  class="rounded-circle userIcon" size="40" tile >
@@ -75,6 +78,9 @@
         
          
   </v-card>
+  <div style="text-align:center;"  v-if="showMoreLoading">
+         <v-progress-circular color="black"  :size="100"  indeterminate></v-progress-circular>
+       </div>
 </div>
 </template>
 
@@ -84,22 +90,126 @@ export default {
     return{
       show:false,
       login:false,
-      postData:{}
+      postData:[],
+       showLoading:false,
+       showMoreLoading:false,
+       startRange:null,
+       endRange:null,
+       totalPostNumber:null,
     }
   },
   methods:{
+    scroll() {
+// document.documentElement.scrollTop, document.body.scrollTop
+      window.onscroll = () => {
+        let bottomOfWindow = Math.max(window.pageYOffset) + window.innerHeight === document.documentElement.offsetHeight
+  //  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+
+  //        this.$router.replace({ name: "career_home", params: {startRange:"2",endRange:"3"}}).then(()=>{
+  //            this.getPost()
+  //        }).catch(()=>{});
+  //  }
+        if (bottomOfWindow) {
+          // code for endless scroll
+          let remain = this.endRange - this.startRange;
+          remain = this.totalPostNumber - remain - 1;
+          console.log(remain);
+      
+          if(this.startRange < 1){
+            this.startRange = 1
+          this.endRange = remain
+
+          }else if (this.startRange > 5){
+            this.startRange = this.startRange - 5
+          this.endRange = remain
+            
+          }else if (this.startRange >1 && this.startRange <= 5){
+            this.startRange = 1
+            this.endRange = this.endRange - 5
+
+          }
+          console.log(this.startRange)
+          console.log(this.endRange)
+   
+                  this.$router.replace({ name: "career_home", params: {startRange:this.startRange,endRange:this.endRange}}).then(()=>{
+             this.getPost()
+             
+         }).catch(()=>{});
+         
+        }  	
+    }
+    },
+    totalPost(){
+         this.axios.get(this.$hostname+"general_api.php?action=totalPost").then((response)=>{
+           this.totalPostNumber = response.data
+           this.startRange = this.totalPostNumber - 5
+           this.endRange = this.totalPostNumber
+           if (this.startRange <= 0){
+             this.startRange = 1
+           }
+            this.$router.replace({ name: "career_home", params: {startRange:this.startRange,endRange:this.totalPostNumber}}).then(()=>{
+                  this.allPost();              
+         }).catch(()=>{});
+        
+         }).catch(error=>{
+           alert(error)
+         })
+
+    },
+    getPost(){
+      this.showMoreLoading = true;
+        let dataRange ={
+           'startRange':this.$route.params.startRange,
+           'endRange':this.$route.params.endRange
+           }
+         this.axios.post(this.$hostname+"general_api.php?action=allPost", dataRange).then((response)=>{
+      
+
+           for ( var index=0; index<response.data.length; index++ ) {
+              this.postData.push(response.data[index])
+              console.log(response)
+           }
+      this.showMoreLoading = false;
+          
+
+         }).catch(error=>{
+      this.showMoreLoading = false;
+           alert(error)
+         })
+    },
     allPost(){
-       this.axios.get(this.$hostname+"general_api.php?action=allPost").then((response)=>{
+         let dataRange ={
+           'startRange':this.$route.params.startRange,
+           'endRange':this.$route.params.endRange
+           }
+     
+      this. showLoading =true;
+       this.axios.post(this.$hostname+"general_api.php?action=allPost", dataRange).then((response)=>{
+      this.showLoading =false;
+   
             this.postData=response.data
-            console.log(response)
+           
         }).catch(error=>{
+      this. showLoading =false;
             alert(error)
           })
     }
   },
+  mounted(){
+      this.totalPost();
+    this.scroll()
+       
+
+    // this.allPost()9
+  },
+  
   created(){
-    this.allPost()
-  }
+  
+
+  },
+  destroyed() {
+ window.onscroll = null; 
+}
 }
 </script>
 

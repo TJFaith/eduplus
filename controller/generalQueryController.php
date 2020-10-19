@@ -155,7 +155,7 @@ public function google_signup($data){
 public function getUserData($data){
     // community created
     $myResources = user_data::where('user_id', $data['id'])->count();
-    $communityCreated = community::where('created_by', $data['id'])->count();
+    $communityCreated = community::where('community_owner', $data['id'])->count();
     $communityJoind = community_data::where('member_id', $data['id'])->count();
     $bestGrade = Capsule::table('assessment_histories')->select('grade')->where('user_id',$data['id'])->get();
     // loop to get best grade
@@ -357,15 +357,23 @@ public function singleCommunity($data){
         'allPost'=>$allPost
     ));
 }
+
+public function totalPost(){
+   $countPost = community_data::count();
+   echo json_encode($countPost);
+}
 // all post
-public function allPost(){
+public function allPost($data){
     $postData = array();
-    $comData =community_data::latest()->get();
+    // whereBetween('age',[$min, $max])->
+   
+    $comData =community_data::latest()->whereBetween('id',[$data['startRange'],$data['endRange']])->get();
     foreach ($comData as $comData) {
         
          // get community info
        $comInfo = community::where('community_id',$comData->community_id)->get();
        $userInfo = user::where('id', $comData->member_id)->get();
+    
     //   echo json_encode($comInfo);
        foreach ($comInfo as $comInfo) {
            foreach ($userInfo as $userInfo) {
@@ -375,14 +383,20 @@ public function allPost(){
                 'text_caption'=>$comData->text_caption,
                 'member_name'=>$userInfo->name,
                 'member_id' => $comData->member_id,
+                
              ));
            }
       
        }
     }
     echo json_encode($postData);
+    
+    // echo json_encode(array(
+    //     $postData,
+    //     'totalPost'=>$countPost
+    // ));
 
-}
+} 
 
 public function deleteCommunity($data){
     community::where('community_id',$data['c_id'])->delete();

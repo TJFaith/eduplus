@@ -126,7 +126,12 @@ $controllerQuery = new generalQueryController();
         return json_encode($controllerQuery->leaveCommunity($query));
     }
     if($action=='allPost'){
-        return json_encode($controllerQuery->allPost());
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->allPost($query));
+    }
+
+    if($action == 'totalPost'){
+        return json_encode($controllerQuery->totalPost());
     }
   
     // API QUERY CONNECTIONS =============== -->

@@ -17,6 +17,9 @@
             <div class="col-md-6">
              
              <div class="search_result">
+                 <div style="text-align:center"  v-if="showLoading">
+         <v-progress-circular color="white"  :size="100"  indeterminate></v-progress-circular>
+       </div>
                 <v-list-item :to="{ name: 'generalSingleCommunity', params: { community_id: community.community_id }}" link class="bg-white mb-3 p-2" v-for="(community, index) in allComunities" :key="index">
                
                    <v-list-item-avatar  class="rounded-circle userIcon" size="40" tile >
@@ -30,9 +33,7 @@
                 </v-list-item-content>
                 
        </v-list-item>
-       <div style="text-align:center"  v-if="showLoading">
-         <v-progress-circular color="white"  :size="100"  indeterminate></v-progress-circular>
-       </div>
+     
        <v-card class="p-4 text-center" color="red--text" v-if="allComunities.length == 0">
          NO RESULT FOUND FOR "<b>{{searchTXT.toUpperCase()}}</b>"
        </v-card>
@@ -40,14 +41,14 @@
         
              </div>
             </div>
-              <router-link to="/career_Communities/home">
+              <router-link to="/career_Communities/home/0/0">
              
                 <div  class="pointer">
 
                
               <span class="white--text font-weight-medium">VIEW COMMUNITY</span>
               <v-icon class="animated pulse" color="white" size=100>fa fa-angle-double-right</v-icon>
- </div>
+          </div>
             
 
             </router-link>

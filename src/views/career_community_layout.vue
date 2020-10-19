@@ -19,7 +19,9 @@
           </v-list-item>
           <v-divider></v-divider>
       
-
+ <div style="text-align:center"  v-if="showLoading">
+         <v-progress-circular color="white"  :size="100"  indeterminate></v-progress-circular>
+       </div>
 
           <v-list-item   :to="{ name: 'generalSingleCommunity', params: { community_id: community.community_id }}" link v-for="(community, index) in allComunities" :key="index" >
         
@@ -33,9 +35,7 @@
    
 
           </v-list-item>
-            <div style="text-align:center"  v-if="showLoading">
-         <v-progress-circular color="white"  :size="100"  indeterminate></v-progress-circular>
-       </div>
+           
        <v-card class="p-4 text-center" color="red--text" v-if="allComunities.length == 0">
          NO RESULT FOUND FOR "<b>{{searchTXT.toUpperCase()}}</b>"
        </v-card>
