@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <app-header/>
 
     <div id="slider1-5" class="carousel slide index-carousel" data-ride="carousel">
@@ -110,7 +110,7 @@
           </section>
     <app-footer/>
 
-  </div>
+  </v-app>
 </template>
 
 <script>

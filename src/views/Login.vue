@@ -50,7 +50,7 @@
                                         </span>
                                          <v-progress-circular color="white"  :size="20" v-if="showLoading"  indeterminate></v-progress-circular>
                                     </button> 
-                                    <a href="" class="btn bg-light text-muted ml-3">Forgot Your Password?</a> 
+                                    <a href="/forgot_password" class="btn bg-light text-muted ml-3">Forgot Your Password?</a> 
                                     <hr> 
                                      <button :disabled="showLoading" type="button" class="google-signin-button btn bg-danger text-white" v-google-signin-button="clientId" > Continue with Google</button>
                                     <!-- <div><a href="" class="btn bg-danger text-white" style="width: 100%;">

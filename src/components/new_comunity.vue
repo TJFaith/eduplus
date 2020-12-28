@@ -10,11 +10,12 @@
           <form ref="comunityForm" @submit.prevent="saveCommunityData()">
         <div class="overlayBG">   
             
-        
+        <!-- CODE FOR BANNER IMAGE -->
        <v-img v-if="banner_img_preview" :src="banner_img_preview"   height="200px">
           <div class="bannerInput">
         <!-- <v-file-input accept="image/*" name="file"   max-file-size="8"  @change="onFileChange" ref="bannerImage"  label="Upload community Banner"  class="inputIcon" filled prepend-icon="mdi-camera"></v-file-input> -->
-        <v-file-input accept="image/*" name="file"  v-model="community_data.banner" 
+        <!-- hide-input -->
+        <v-file-input accept="image/*"  name="file"  v-model="community_data.banner" 
           max-file-size="8"  @change="onFileChange" ref="bannerImage"  label="Upload community Banner"  class="inputIcon" filled prepend-icon="mdi-camera"></v-file-input>
         </div>
        </v-img>
@@ -28,6 +29,7 @@
     </v-img>
     </div>
      
+     <!-- CODE FOR AVATAR -->
      <v-avatar  class="float-right rounded-circle groupIcon" size="130" tile  @mouseover="opacity=0.46" @mouseleave="opacity=0">
     <v-img v-if="icon_img_preview"   :src="icon_img_preview" >
      <v-overlay
@@ -201,7 +203,8 @@ export default {
             banner_img_preview: null,
             icon_img_preview: null,
             newAdminEmail:"",
-            community_data:{title:'',description:'', banner:[], email:[]},
+            community_data:{title:'',description:'', banner:[]
+            , email:[]},
             imputRules:{
               text:[v => v != '' || 'This field is required '],
               description:[d => d.length >= 1 || 'Group discription should be at least 80 character long'],
@@ -249,8 +252,9 @@ export default {
 
                 }else{
                   this.community_data.banner=e
-                 
                    this.banner_img_preview= URL.createObjectURL(e);
+                 console.log(e)
+
                    
                 }
              }else{

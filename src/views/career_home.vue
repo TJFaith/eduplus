@@ -14,7 +14,7 @@
           <span class="mx-2">{{postData.community_name}}</span>
           
        </v-card-text>
-       <v-card-text v-html="postData.text_caption">
+       <v-card-text v-html="postData.text_caption" class="caption_image">
 
        </v-card-text>
      <!-- <div class="m-auto">
@@ -128,8 +128,6 @@ export default {
             this.endRange = this.endRange - 5
 
           }
-          console.log(this.startRange)
-          console.log(this.endRange)
    
                   this.$router.replace({ name: "career_home", params: {startRange:this.startRange,endRange:this.endRange}}).then(()=>{
              this.getPost()

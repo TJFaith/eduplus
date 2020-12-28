@@ -27,8 +27,9 @@ class generalQueryController
 
          
     // CERTIFICATION
-    public function AllCertification(){
-        echo certification::orderBy('ID','DESC')->get();
+    public function AllCertification($data){
+        echo certification::latest()->whereBetween('id',[$data['startRange'],$data['endRange']])->get();
+        // echo certification::orderBy('ID','DESC')->get();
      }
   //  get all certification category
   public function c_category(){
@@ -49,9 +50,18 @@ class generalQueryController
 }
 
 private function getUserID($email){
+//    echo $email;
    return $user_id = User::select('id','name')->where('email',$email)->get();
 
 }
+
+// confirm email
+public function getUserEmail($email){
+       print_r($email);
+    //    return $user_id = User::select('id','name')->where('email',$email)->get();
+    
+}
+
 // Authentication
 public function signup($data){
     //   Check if email exist
@@ -76,6 +86,21 @@ public function signup($data){
       
 }
 
+public function updatePassword($data){
+    // echo json_encode($data);
+    try{
+        User::where('email', $data['userEmail'])->update([
+    
+            'password'        =>  password_hash($data['newPassword'], PASSWORD_BCRYPT),
+            'updated_at'            => date('Y-m-d H:i:s')
+            
+    ]);
+    echo $this->responseMessage();
+
+}catch(Exception $e){
+    return json_encode('Ops! sorry an error occured');
+}
+}
 public function login($data){
     $respons ='';
     $aut = User::where('email', $data['email'])->get();
@@ -361,6 +386,10 @@ public function singleCommunity($data){
 public function totalPost(){
    $countPost = community_data::count();
    echo json_encode($countPost);
+}
+
+public function totalCertificationPost(){
+    echo json_encode(certification::count());
 }
 // all post
 public function allPost($data){

@@ -26,6 +26,9 @@ const certification =() =>
   const login =() =>
   import(/* webpackChunkName: "login" */ '../views/Login.vue')
 
+  const forgot_password =() =>
+  import(/* webpackChunkName: "forgot_password" */ '../views/forgot_password.vue')
+
   const resource_center =() =>
   import(/* webpackChunkName: "resource_center" */'../views/Resource_Center.vue')
 
@@ -108,7 +111,6 @@ Vue.use(VueRouter)
     },
     children:[
       {
-      
         path:'/career_Communities/home/:startRange/:endRange',
         name:'career_home',
         component:career_home
@@ -129,7 +131,7 @@ Vue.use(VueRouter)
     }
   },
   {
-    path: '/certification',
+    path: '/certification/:startRange/:endRange',
     name: 'certification',
     component: certification,
     meta: {
@@ -150,6 +152,14 @@ Vue.use(VueRouter)
     component: login,
     meta: {
       title: 'Eduplus -- User Login',
+    }
+  },
+  {
+    path:'/forgot_password',
+    name:'forgot_password',
+    component:forgot_password,
+    meta:{
+      title:'Eduplus -- Forgotten Password'
     }
   },
   {

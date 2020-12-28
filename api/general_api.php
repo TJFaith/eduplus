@@ -24,7 +24,9 @@ $controllerQuery = new generalQueryController();
     }
 
     if($action=='AllCertification'){
-        return json_encode($controllerQuery->AllCertification());
+        $query = json_decode(file_get_contents('php://input'),true);
+        // echo json_encode ($query);
+        return json_encode($controllerQuery->AllCertification($query));
     }
 
     if($action == 'c_category'){
@@ -37,8 +39,16 @@ $controllerQuery = new generalQueryController();
         // echo json_encode($query);
         return json_encode($email->email($query));
      }
-     
-     
+     if($action == 'retrivePassword'){
+        $query = json_decode(file_get_contents("php://input"),true);
+        // echo json_encode($query);
+        return json_encode($email->retrivePassword($query));
+     }
+
+     if($action == 'confirmOTP'){
+         $query = json_decode(file_get_contents("php://input"),true);
+         return json_encode($email->confirmOTP($query));
+     }
     // search code
     if($action =='search_filter'){
         $query = json_decode(file_get_contents('php://input'),true);
@@ -133,7 +143,15 @@ $controllerQuery = new generalQueryController();
     if($action == 'totalPost'){
         return json_encode($controllerQuery->totalPost());
     }
+
+    if($action == 'totalCertificationPost'){
+        return json_encode($controllerQuery->totalCertificationPost());
+    }
   
+    if($action=='updatePassword'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->updatePassword($query));
+    }
     // API QUERY CONNECTIONS =============== -->
 
     // Career Communities

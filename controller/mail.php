@@ -3,6 +3,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
+use Models\user;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -15,23 +16,36 @@ require '../vendor/autoload.php';
 // Instantiation and passing `true` enables exceptions
 
 class php_mail{
-
+   private $mail;
+private function emailConfig(){
+        $this->mail = new PHPMailer(true);
+    
+        //Server settings
+        //     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+        $this->mail->SMTPDebug = 0;                      // Enable verbose debug output
+        $this->mail->isSMTP();                                            // Send using SMTP
+        $this->mail->Host       = 'mail.tectainet.com';                   // Set the SMTP server to send through
+        $this->mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+        $this->mail->Username   = 'mailer@tectainet.com';                 // SMTP username
+        $this->mail->Password   = 'faithproxx22';                         // SMTP password
+        $this->mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+         $this->mail->SMTPSecure = 'ssl';
+        $this->mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+        
+       
+}
+private function generateId(){
+    // CODE TO GENERATE ID
+     $token = 'qwertzuiopasdfghjklyxcvbnmABCDEFGHIJKLMNOPQRSTUVWXYZ123456789abcdefghijklmnopqrstuvwxyz';
+     $token = str_shuffle($token);
+     return $token = substr($token,  0,  6);
+    //  $current_date = date('Ymd');
+    //  return $token = $token.$current_date;
+ }
 public function email($data){
 
-$mail = new PHPMailer(true);
 
-
-            //Server settings
-        //     $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
-            $mail->SMTPDebug = 0;                      // Enable verbose debug output
-            $mail->isSMTP();                                            // Send using SMTP
-            $mail->Host       = 'mail.tectainet.com';                    // Set the SMTP server to send through
-            $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-            $mail->Username   = 'mailer@tectainet.com';                     // SMTP username
-            $mail->Password   = 'faithproxx22';                               // SMTP password
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-            $mail->Port       = 465;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-            $mail->SMTPSecure = 'ssl';
+            $this->emailConfig();
 
             //Recipients
             $mail->setFrom($data['email'], $data['fullName']);
@@ -68,6 +82,102 @@ $mail = new PHPMailer(true);
            
         }
 
+        public function retrivePassword($data){
+            // echo json_encode($data);
+            // check if email exist
+            $respons ='';
+           $user_id = User::select('id','name', 'email', 'password')->where('email',$data['email'])->get();
+           if (!count($user_id)) {
+            $respons ='Not found';
+            // Email not found in database
+           } else{
+            // send mail
+            $userEmail=''; $userFullName='';
+            $token = $this->generateId();
+            $this->emailConfig();
+            foreach($user_id as $user_data){
+                if($user_data->password == null){
+                    $respons ='No password';
+                }else{
+                $userEmail = $user_data->email;
+                $userFullName = $user_data->name;
+                $this->mail->setFrom('mailer@tectainet.com', 'EDUPLUS');
+                $this->mail->addReplyTo($userEmail);
+                $this->mail->addAddress($userEmail, $userFullName);   
+                $this->mail->isHTML(true);                                  // Set email format to HTML
+                $this->mail->Subject = 'PASSWORD RESET TOKEN';
+                $this->mail->Body    = 'Hello '. $userFullName . ', here is your password reset token, <br>
+                
+                <p><b>'
+                .$token
+                .'
+                </b></p>
+                <p><strong>NOTE: This One time Password (OTP) expires in 5 minutes</strong></p>
+                
+                ';
+            try {
+                $this->mail->send();
+                // remember_token
+                
+                // save the token to database
+
+                User::where('email',$userEmail)->update([
+                    'otp'             => $token,
+                    'updated_at'        => date('Y-m-d H:i:s')
+                ]);
+
+                
+                $respons = 'sent';
+            //     echo 'Message has been sent';
+                } catch (Exception $e) {
+                    $respons= "Message could not be sent. Mailer Error: {$this->mail->ErrorInfo}";
+                }
+    
+                }
+            }
+            
+         
+           }
+
+           echo json_encode(array(
+            'respond'=>$respons,
+        ));
+        }
+
+        public function confirmOTP($data){
+            //  $otpData = User::select('email','otp', 'is_expired','updated_at')->where('otp','=', $data['otp'])->where('is_expired','!=', 1)
+            //  ->whereRaw('updated_at >= now() - interval ? minute', [5])->get();
+           
+             $date = new DateTime;
+             $date->modify('-5 minutes');
+             $formatted_date = $date->format('Y-m-d H:i:s');
+             
+             $otpData = User::select('email','otp', 'is_expired','updated_at')->where('otp','=', $data['otp'])->where('is_expired','!=', 1)->get();
+            //  ->where('updated_at','>=',$formatted_date)->get();
+
+             if (!count($otpData)) {
+                echo json_encode(array(
+                    'respond'=>'Incurrect OTP',
+                    'alertColor'=>'red'
+
+                ));
+            }else {
+                foreach ($otpData as $value) {
+                    if($value['updated_at'] >= $formatted_date){
+                        echo json_encode(array(
+                            'respond'=>'Correct',
+                            'alertColor'=>'green'
+                        ));  
+                    }else{
+                        echo json_encode(array(
+                            'respond'=>'OTP Session has espire',
+                            'alertColor'=>'red'
+                        ));
+                    }
+                }
+            }
+
+        }
 }
 
 ?>

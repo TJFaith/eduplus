@@ -83,7 +83,7 @@
           <hr>
        </v-card-text>
        <v-card-text>
-         <span v-html="communityDataPost.text_caption">
+         <span v-html="communityDataPost.text_caption" class="caption_image">
           
          </span>
        </v-card-text>
@@ -168,7 +168,7 @@ export default {
       this.axios.post(this.$hostname+"general_api.php?action=singleCommunity", communityID).then((response)=>{
             this.showLoading= false;
             this.communityDATA=response.data
-           
+           console.log(this.response)
 
             // ch eck if user is login
             if(this.$session.has('user_login')){
@@ -266,9 +266,7 @@ export default {
                               
             }
           }])
-      
-
-     
+         
     },
     login(){
         let currentURL = window.location.href
@@ -285,8 +283,7 @@ export default {
           'community_id':this.$route.params.community_id,
           'member_id':this.$session.get('user_login').id
           }
-    
-      this.axios.post(this.$hostname+"general_api.php?action=newPost", newPost).then((response)=>{
+    this.axios.post(this.$hostname+"general_api.php?action=newPost", newPost).then((response)=>{
           console.log(response)
           if(response.data.response == 'success'){
             this.newPost = ''
@@ -302,7 +299,6 @@ watch:{
     return this.getID();
   }
 },
-
   computed:{
     getCID(){
       return this.getID()
@@ -314,7 +310,6 @@ watch:{
   },
   beforeDestroy (){
     bus.$emit('showSettings', false);
-
   }
 }
 </script>

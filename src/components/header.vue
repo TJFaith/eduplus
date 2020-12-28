@@ -29,7 +29,7 @@
                     <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/">Home</router-link></li>
                     <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/career_Communities">Career communities</router-link></li>
                     <!-- <li @click="toggleCollapse=true"  class="nav-item"><router-link class="nav-link" to="/resource_center">Resource Center</router-link></li> -->
-                    <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/certification">Certification</router-link></li>
+                    <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/certification/1/10">Certification</router-link></li>
                     <li @click="toggleCollapse = true" class="nav-item"><router-link class="nav-link" to="/contact">Contact Us</router-link></li>
                     <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/about">About Us</router-link></li>
                 </ul>

@@ -2,7 +2,7 @@
   <div>
     <app-header/>
       <div>
-        <div class="container-fluid mt-16" style="border:2px solid red">
+        <div class="container-fluid mt-16">
           <div class="row toprow">
             <div class="headerTXT col-md-4">
               <h6>JOIN A</h6>

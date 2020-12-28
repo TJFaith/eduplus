@@ -155,7 +155,14 @@
     text-align: center;
 }
 
-
+.caption_image img{
+  width: 50%;
+}
+@media (max-width: 768px) {
+  .caption_image img{
+  width: 100%;
+}
+}
 
 
 
