@@ -92,6 +92,13 @@
     background-color: black;
 }
 
+.third-row{
+  padding: 4%;
+  color:#fff;
+  background-color: black;
+  text-align: center;
+  
+}
 .card-text a:hover{
     text-decoration: none;
   }

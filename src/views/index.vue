@@ -58,24 +58,57 @@
           <div class="container">
               <div class="row" style="text-align:justify">
                 
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                          <h4 style="text-align:center">PARENTS EXPECTATION</h4> 
                          <hr style="background-color:#fff; width:5em;">
 
                          - Parents often have very high academic and career expectations for their children, which some children cannot live up to. Unfortunately, in some societies, concern about disappointing one's parents is a tragedy the student cannot deal with, so he kills himself.
-                </div>
+                </div> -->
 
-                <div class="col-md-4">
-                          <h4 style="text-align:center">CHILDREN'S INTERESTS</h4>
+                <div class="col-md-8">
+                          <h4 style="text-align:center">PARENTS’ EXPECTATION 	VS	 CHILDREN’S INNER STRENGHT</h4>
                           <hr style="background-color:#fff; width:5em;">
-                          - This is not an uncommon situation. A child has a field of study that he is interested in, but the parent has a totally different goal for him. The child wants to be an artist; his parents want him to go to med-school and become a doctor. The child wants to be a political scientist; his parents want him to be an engineer. This clash is very deadly to the child inbuilt passion.
+                             <v-card
+   flat
+    class="mx-auto"
+    max-width="90%"
+  >
+  
+
+    <v-img
+      src="@/assets/images/expectation.png"
+    ></v-img>
+
+    <!-- <v-card-title>EDUPLUS SYSTEM INTERVENTION</v-card-title> -->
+
+    <v-card-text class="px-0 ">
+  
+      
+
+      <div class="text-justify">
+       In most societies, particularly the 3rd world countries, at the time of choosing 		the career path(s), the children are vulnerable and the parents/guardians lord career paths on them. Oblivious of the fact that they played a minor role in defining their tomorrow, the parents still place high hope and expectations on these wards/children in the “forced” career paths. Researches had shown that the trepidation of not matching up with the parental expectations by some children had birthed tragic cases. <br><br>
+It is pertinent to know that  the polemic between the children’s inner strength and the parents’ career imposition most often have negative effect on the human capital development of the concerned children.
+      </div>
+    </v-card-text>
+
+  </v-card>
+                      
                 </div>
 
                 <div class="col-md-4">
-                    <h4 style="text-align:center">EDUPLUS SYSTEM FOCUS</h4>
-                    <hr style="background-color:#fff; width:5em;">
-                    - From the two previous writing, it can be read clearly that the parent and children themselves have a lot to do in determination of a brighter and better future ahead, for this singular reason we at Eduplus have come up with an educative system which would not only guide the young minds but also set some basic tools in order for them to easily and conveniently determine which skill or course of study to pursue
-          </div>
+                    <h3 class="text-center">EDUPLUS SYSTEM INTERVENTION</h3>
+
+                      <div class="col-md-3 text-center">
+                  <img class="img-responsive" src="@/assets/images/int.jpg" alt="">
+                  </div>
+                <div class="col-md-9">
+                  <div class="text-justify">
+                    <p class="ml-5">
+        In a bid to help the parents/guardians bring out the best in the career development of their children, as well as propelling the children’s inner strength to actualize their dreams, EDUPLUS SYSTEM intervention is required. Eduplus system is an online educative software that not only guide the young minds, but also set some basic tools for them to effectively determine their areas of core competence.
+     </p>
+      </div>
+                </div>
+                </div>
      
               </div>
           </div>
@@ -108,6 +141,27 @@
            </div>
             </div>
           </section>
+
+          
+
+          <!-- <section>
+            <div class="container-fluid p-5">
+            <div class="row">
+                <div class="col-md-3 text-center">
+                  <img class="img-responsive" src="@/assets/images/int.jpg" alt="">
+                  </div>
+                <div class="col-md-9">
+                  <div class="text-justify">
+                    <h3 class="text-center">EDUPLUS SYSTEM INTERVENTION</h3>
+                    <p class="ml-5">
+        In a bid to help the parents/guardians bring out the best in the career development of their children, as well as propelling the children’s inner strength to actualize their dreams, EDUPLUS SYSTEM intervention is required. Eduplus system is an online educative software that not only guide the young minds, but also set some basic tools for them to effectively determine their areas of core competence.
+     </p>
+      </div>
+                </div>
+           
+           </div>
+            </div>
+          </section> -->
     <app-footer/>
 
   </v-app>
@@ -122,3 +176,26 @@ export default {
  }
 }
 </script>
+
+<style scoped>
+  .expectation{
+    /* background:red; */
+    background-image: linear-gradient(to right, rgb(0, 0, 0) 0%,rgba(0, 0, 0, 0.068) 100%), url('~@/assets/images/expectation.png');
+    /* background: linear-gradient(bottom, red, green), url('~@/assets/images/expectation.png'); */
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    height:100vh;
+    width:100%;
+  }
+  .expectation h5{
+    color:#fff;
+    position: relative;
+    margin:0px 10%; 
+    top:30vh;
+    width:50%;
+    font-size: 4vw;
+    font-family: sans-serif;
+
+  }
+</style>

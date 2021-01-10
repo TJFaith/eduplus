@@ -8,7 +8,6 @@ import VueSession from 'vue-session'
 import bootstrap from 'bootstrap-vue'
 import GoogleSignInButton from 'vue-google-signin-button-directive'
 import VueSweetalert2 from 'vue-sweetalert2';
-import VueCoreVideoPlayer from 'vue-core-video-player'
 import quillEditor from 'vue-quill-editor'
 
 import 'quill/dist/quill.core.css' // import styles
@@ -21,7 +20,6 @@ Vue.use(VueAxios, axios)
 Vue.use(VueSession)
 Vue.use(bootstrap)
 Vue.use(VueSweetalert2)
-Vue.use(VueCoreVideoPlayer)
 Vue.use(quillEditor)
 
 

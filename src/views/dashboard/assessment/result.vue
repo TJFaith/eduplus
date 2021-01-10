@@ -79,6 +79,7 @@
                             <tr>
                                 <td>Science</td>
                                 <td>{{quest.sciencePercentR}} %</td>
+
                             </tr>
                             <tr>
                                 <td>Commercial</td>
@@ -123,6 +124,7 @@ export default {
               // CALCULATE RESULT
                 this.axios.post(this.$hostname+"junior_api.php?action=result",tableName).then((response)=>{
                     this.quest = response.data
+                    // console.log(this.quest)
                 }).catch(()=>{
                        this.$swal.insertQueueStep({
                           icon: 'error',

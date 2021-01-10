@@ -90,6 +90,7 @@ export default {
             if(this.passwordMissmatch =='' && this.signup_data.c_password != undefined){
             this.show_loader =true;
                 this.axios.post(this.$hostname+"general_api.php?action=signup", this.signup_data).then((response)=>{
+              
                    let res = response.data;
                    if(res.respond == "Exist"){
                    this.confirm_email ="Account with this email exist please login"

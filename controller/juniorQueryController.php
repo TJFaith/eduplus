@@ -167,7 +167,7 @@ class juniorQueryController
         $assesment_history = Capsule::table('assessment_histories')->where('assesment_title',$qustion_table_name)->get();
 
        $subjects = subject::all();
-
+       
        $scienceSubject =  subject::where('subject_category','s')->orWhere('subject_category','sc')->orWhere('subject_category','as')->get();
 
        $commercialSubject = subject::where('subject_category','c')->orWhere('subject_category','sc')->orWhere('subject_category','ac')->get();
@@ -264,13 +264,32 @@ class juniorQueryController
                 // Count Score
                $scores = count($correct_answer = Capsule::table($qustion_table_name)->whereColumn('answer_id', 'myAnswer')->where('subject_id',$allAnswer->subject_id)->get());
                  $scores = $scores *20;
+                 
                //Save status in a collection 
-               $assessment_status->push(['subject'=>$sub->subject, 'subject_id'=>$allAnswer->subject_id,'score'=>$scores]);
+               $assessment_status->push(['subject'=>$sub->subject, 'subject_id'=>$allAnswer->subject_id,'score'=>$scores, ]);
             }
           
          }
 
         }
+
+    // CODE TO CALCULATE THE TOTAL PERCENTAGE FOR ALL SUBJECT 
+    // Get overall subject grade 
+    $overallGrade = subject::count()*100;
+    $addGrade =0; 
+    foreach($assessment_status as $grade){
+        $addGrade = $addGrade + $grade['score'];
+    }
+
+    // calculate the percentage
+    $totalGrade = $addGrade / $overallGrade * 100;
+    Capsule::table('assessment_histories')->where('assesment_title',$qustion_table_name)->update([
+        'grade'   => $totalGrade,
+        'updated_at'     =>  date('Y-m-d H:i:s')
+    ]);
+    
+    
+
       //Render to the view
       $resultOutPut = array(
         'assesment_history'         =>  $assesment_history,
@@ -278,12 +297,11 @@ class juniorQueryController
         'sciencePercentR'           =>  $sciencePercentR,
         'commercialPercentR'        =>  $commercialPercentR,
         'artPercentR'               =>  $artPercentR,
-        'remark'                    =>  $remark
+        'remark'                    =>  $remark,
+        'overallGrade'              =>  $totalGrade
     );
       echo json_encode($resultOutPut);
 
-
-        
     }
     
 }

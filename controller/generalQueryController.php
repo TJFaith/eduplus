@@ -51,7 +51,7 @@ class generalQueryController
 
 private function getUserID($email){
 //    echo $email;
-   return $user_id = User::select('id','name')->where('email',$email)->get();
+   return $user_id = User::where('email',$email)->get();
 
 }
 
@@ -65,7 +65,7 @@ public function getUserEmail($email){
 // Authentication
 public function signup($data){
     //   Check if email exist
-    $email = User::select('email')->where('email', $data['email'])->get();
+    $email = User::where('email', $data['email'])->get();
     if (!$email ->count() ){
         $signup = new User;
         $signup -> name = $data['name'];
@@ -180,8 +180,8 @@ public function google_signup($data){
 public function getUserData($data){
     // community created
     $myResources = user_data::where('user_id', $data['id'])->count();
-    $communityCreated = community::where('community_owner', $data['id'])->count();
-    $communityJoind = community_data::where('member_id', $data['id'])->count();
+    $communityCreated = community::where('community_owner', $data['email'])->count();
+    $communityJoind = community_admin_member::where('user_id', $data['id'])->count();
     $bestGrade = Capsule::table('assessment_histories')->select('grade')->where('user_id',$data['id'])->get();
     // loop to get best grade
     $bGradeF = 0;
@@ -190,15 +190,31 @@ public function getUserData($data){
             $bGradeF = $bGrade->grade; 
         }
     }
+   
     echo json_encode(array(
-        'CommunitiesCreated'=>$communityCreated,
-        'CommunityJoind'=>$communityJoind,
-        'bestGrade' => $bGradeF,
-        'myResources' => $myResources
+        'CommunitiesCreated'        =>  $communityCreated,
+        'CommunityJoind'            =>  $communityJoind,
+        'bestGrade'                 =>  $bGradeF,
+        'myResources'               =>  $myResources,
     ));
     // echo User::where('id',$data['user_id'])->get();
 }
 
+public function selectGrade($data){
+   
+   $selectedData =  Capsule::table('assessment_histories')
+                            ->select('grade')
+                            ->whereMonth('updated_at', $data['selectedMonth'])
+                            ->whereYear('updated_at', $data['selectedYear'])
+                            ->where('user_id', $data['user_id'])
+                            // ->orderBy('grade','desc')
+                            // ->take(10)
+                            ->get();
+
+     echo json_encode(array(
+        'assessment'        =>  $selectedData,
+    ));
+}
 // START OF CAREER COMMUNITY METHODS ============================================
 // Image upload processing 
    // private methods

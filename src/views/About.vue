@@ -19,21 +19,21 @@
              </div>
             <div class="row" style="width: 100%;">
               
-                    <label class="col-form-label w-100 text-center bg-dark shadow d-lg-flex justify-content-lg-center  bounce animated">COMPANY PROFILE<br></label>
+                    <label class="col-form-label w-100 text-center bg-dark shadow d-lg-flex justify-content-lg-center  bounce animated">ABOUT US<br></label>
                   
             </div>
             <br/><br/>
             <div class="row" style="width: 100%;">
                 <div class="col">
                     <div>
-                        <p>PREGLOSAMOLY-FLORISH LTD (POL) &nbsp;is a company committed to educational&nbsp;development. We have strong &amp; experienced personnel to support students at all levels for career guardian and counseling. Also software for career assessments.</p>
+                        <p>At Preglosam – Oly-Florish limited, we are passionate about evolving human capital development architecture that will aid students to identify their areas of strength as well as horning their skills to bring out the best in them. Our online Eduplus system application is a one stop software that that will help our users in:</p>
                         <ul
                             style="font-size: 15px;">
-                            <li>Career Assessment<br></li>
-                            <li>Career Guardian and Counseling<br></li>
-                            <li>Educational Support and Management<br></li>
-                            <li>Supply of Educational Materials<br></li>
-                            <li>Supply of Stationeries<br></li>
+                            <li>Career assessment<br></li>
+                            <li>Career guardians and counselling<br></li>
+                            <li>Educational support and management<br></li>
+                            <li>Supply of educational materials<br></li>
+                            <li>Supply of stationeries<br></li>
                             </ul>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
         </div>
         <div style="width: 100%;min-width: 100%;max-width: 100%;height: auto;">
             <div class="row" style="width: 100%;">
-                <div class="col"><p class="col-form-label text-center bg-dark shadow d-lg-flex justify-content-lg-center align-items-lg-center bounce animated" style="width: 100%;">VISSION STATEMENT</p></div>
+                <div class="col"><p class="col-form-label text-center bg-dark shadow d-lg-flex justify-content-lg-center align-items-lg-center bounce animated" style="width: 100%;">VISION STATEMENT</p></div>
             </div>
             <div class="row" style="width: 100%;">
                 <div class="col">
@@ -55,7 +55,7 @@
             </div>
             <div class="row" style="width: 100%;">
                 <div class="col">
-                    <p style="margin-top: 5%;font-size: 15px;">To assist students in choosing field of studies through career software and guidance of qualified/experienced professionals. Also to provide growth support to educational institutions through provision growth tools and equipments.<br><br></p>
+                    <p style="margin-top: 5%;font-size: 15px;">To assist students in choosing field of studies through career software and guidance of qualified/experienced professional. Also to enhance educational institutions through provision of new age educational tools and equipment.<br><br></p>
                 </div>
             </div>
         </div>

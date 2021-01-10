@@ -77,6 +77,11 @@ $controllerQuery = new generalQueryController();
         return json_encode($controllerQuery->getUserData($query));
     }
 
+    if($action == 'selectGrade'){
+        $query = json_decode(file_get_contents('php://input'),true);
+        return json_encode($controllerQuery->selectGrade($query));
+    }
+
     if($action == 'newComunity'){
         $query = json_decode(file_get_contents('php://input'),true);
         // $name = $_FILES['imgfile']['name'];

@@ -6,59 +6,72 @@
   </div>
   
   <!-- Navbar -->
-  <nav class="main-header navbar fixed-top navbar-expand navbar-white navbar-light" >
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
+  
+   <nav   class="navbar navbar-expand-lg navbar-light bg-light shadow-sm fixed-top custom-navbar">
+
+     <!-- <v-app-bar-nav-icon  v-if="show_side_bar" class="navbar-brand" @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
+        
+        <div class="container p-0">
+    
+             <div class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
-      </li>
-      
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="/career_Communities" class="nav-link">Career Communities</a>
-      </li>
-      <!-- <li class="nav-item d-none d-sm-inline-block">
-          <a href="#" class="nav-link">Resource Center</a>
-      </li> -->
-      <li class="nav-item d-none d-sm-inline-block">
-          <a href="/certification" class="nav-link">Certification</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-          <a href="/contact" class="nav-link">Contact</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-          <a href="/about" class="nav-link">About Us</a>
-      </li>
-    </ul>
-
-    <!-- SEARCH FORM -->
-    <!-- <form class="form-inline ml-3">
-      <div class="input-group input-group-sm">
-        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-        <div class="input-group-append">
-          <button class="btn btn-navbar" type="submit">
-            <i class="fas fa-search"></i>
-          </button>
-        </div>
       </div>
-    </form> -->
+            
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-          <!-- Brand Logo -->
-        <router-link to="/" class="brand-link">
-          <img src="@/assets/images/logo.png" alt="Eduplus Logo" class="brand-image"
-              style="opacity: .8">
-          <span class="brand-text font-weight-light">eduplus</span>
-        </router-link>
-      </li>
-     
-    </ul> 
-  </nav>
+                   <!-- Right Side Of Navbar -->
+                <div class="navbar-nav ml-auto d-lg-none">
+                    <!-- Authentication Links -->
+                    <a href="/" class="navbar-brand">
+             <v-img
+                        alt="Eduplus Logo"
+                        class="shrink mr-2"
+                        contain
+                        src="@/assets/images/logo.png"
+                        transition="scale-transition"
+                        width="40"
+                      />
+                     </a>
+    
+                </div>
+               
+                <v-app-bar-nav-icon class="d-lg-none ml-auto" @click="toggleCollapse=false" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" >
+                <span class="navbar-toggler-icon"></span>
+            </v-app-bar-nav-icon>
+
+            <div class="navbar-collapse" :class="{'collapse':toggleCollapse}" id="navbarSupportedContent">
+                <!-- Left Side Of Navbar -->
+                <ul class="navbar-nav ml-auto otherMenu">
+                    <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/">Home</router-link></li>
+                    <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/career_Communities">Career communities</router-link></li>
+                    <!-- <li @click="toggleCollapse=true"  class="nav-item"><router-link class="nav-link" to="/resource_center">Resource Center</router-link></li> -->
+                    <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/certification/1/10">Certification</router-link></li>
+                    <li @click="toggleCollapse = true" class="nav-item"><router-link class="nav-link" to="/contact">Contact Us</router-link></li>
+                    <li @click="toggleCollapse=true" class="nav-item"><router-link class="nav-link" to="/about">About Us</router-link></li>
+                </ul>
+
+                <div class="navbar-nav ml-auto d-none d-md-block ">
+                    <!-- Authentication Links -->
+                    <a href="/" class="navbar-brand">
+             <v-img
+                        alt="Eduplus Logo"
+                        class="shrink mr-2"
+                        contain
+                        src="@/assets/images/logo.png"
+                        transition="scale-transition"
+                        width="40"
+                      />
+                     </a>
+    
+                </div>
+            </div>
+        
+        </div>
+      
+ 
+    </nav>
+    
+      
+    
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -115,7 +128,7 @@
               <router-link to="/dashboard" class="nav-link">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
-                  Dashobard
+                  Dashboard
                 </p>
               </router-link>
             </li>
@@ -221,7 +234,8 @@ export default {
   data(){
     return{
       userData:{},
-      showDialog:false
+      showDialog:false,
+      toggleCollapse:true,
     }
   },
  
