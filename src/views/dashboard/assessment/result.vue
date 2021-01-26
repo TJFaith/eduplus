@@ -153,6 +153,7 @@ export default {
     },
     created(){
          this.userData=this.$session.get('user_login');
+         console.log(this.userData)
           this.user_name=this.userData.name
         this.calculateResult();
         // this.quest = this.$session.get('currentTest');
@@ -162,6 +163,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    body{
+  overscroll-behavior-y: contain;
+}
 </style>

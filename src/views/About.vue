@@ -26,7 +26,7 @@
             <div class="row" style="width: 100%;">
                 <div class="col">
                     <div>
-                        <p>At Preglosam – Oly-Florish limited, we are passionate about evolving human capital development architecture that will aid students to identify their areas of strength as well as horning their skills to bring out the best in them. Our online Eduplus system application is a one stop software that that will help our users in:</p>
+                        <p>We are passionate about evolving human capital development architecture that will aid students to identify their areas of strength as well as horning their skills to bring out the best in them. Our online Eduplus system application is a one stop software that that will help our users in:</p>
                         <ul
                             style="font-size: 15px;">
                             <li>Career assessment<br></li>
@@ -41,7 +41,7 @@
         </div>
         <div style="width: 100%;min-width: 100%;max-width: 100%;height: auto;">
             <div class="row" style="width: 100%;">
-                <div class="col"><p class="col-form-label text-center bg-dark shadow d-lg-flex justify-content-lg-center align-items-lg-center bounce animated" style="width: 100%;">VISION STATEMENT</p></div>
+                <div class="col"><p class="col-form-label text-center bg-dark shadow d-lg-flex justify-content-lg-center align-items-lg-center bounce animated" style="width: 100%;">VISION</p></div>
             </div>
             <div class="row" style="width: 100%;">
                 <div class="col">

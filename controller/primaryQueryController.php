@@ -80,7 +80,7 @@ array_push($subject_arr, array(
 ));
 
 
-$question = primary_question::inRandomOrder()->where('subject_id',$subLoop->primary_subject_id)->limit(5)->get();
+$question = primary_question::inRandomOrder()->where('subject_id',$subLoop->primary_subject_id)->limit(10)->get();
 foreach($question as $qst){
 // get instruction
 $instruction = primary_instruction::select('instruction')->where('instruction_id',$qst->instruction_id)->get();

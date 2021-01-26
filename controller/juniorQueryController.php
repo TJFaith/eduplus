@@ -60,23 +60,10 @@ class juniorQueryController
 
     // questionEngin
     public function junior_question($data){
-       
-        // if(!Capsule::schema()->hasTable($data['tableName'])){
-       // array variables
+  
         $subject_arr    =   array();
         $question_arr   =   array();
-    //    CREATE ASSESSMENT HISTORY TABLE
-
-            // Capsule::schema()->create($data['tableName'], function ($table) {
-            //     $table->bigIncrements('id');
-            //     $table->string('question_id');
-            //     $table->string('instruction_id')->nullable();
-            //     $table->string('subject_id');
-            //     $table->integer('answer_id');
-            //     $table->string('myAnswer')->nullable();
-            //     $table->timestamps();
-            // });
-
+ 
              
         $subject = subject::inRandomOrder()->get(); 
         foreach ($subject as $subLoop){
@@ -86,7 +73,7 @@ class juniorQueryController
             ));
 
            
-                $question = question::inRandomOrder()->where('subject_id',$subLoop->subject_id)->limit(5)->get();
+                $question = question::inRandomOrder()->where('subject_id',$subLoop->subject_id)->limit(10)->get();
                 foreach($question as $qst){
                 // get instruction
                 $instruction = instruction::select('instruction')->where('instruction_id',$qst->instruction_id)->get();
@@ -103,10 +90,7 @@ class juniorQueryController
                         'my_answer'   => ''
                     ));
                     
-               
-                 // check if table colomns has values
-                //  $checkTableId = Capsule::table($data['tableName'])->get();
-                //  if (!$checkTableId == null) {
+            
                         Capsule::table($data['tableName'])->insert([
                             'subject_id'        => $qst->subject_id,
                             'question_id'       => $qst->question_id,
@@ -116,11 +100,10 @@ class juniorQueryController
                             'updated_at'        => date('Y-m-d H:i:s')
     
                         ]);
-                // }
-              
+                
+
             }
             
-            // }
 
           
         }
@@ -135,7 +118,6 @@ class juniorQueryController
           );
             echo json_encode($allData);
 
-   
          }
 
 
@@ -183,6 +165,7 @@ class juniorQueryController
             $science += $science_total;
             $u_s_score  += $scince_score;
         }
+        
         $science;
 
          //Commercial Subject calculation

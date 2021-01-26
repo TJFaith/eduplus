@@ -75,7 +75,6 @@
         
 
                <h6 class="box-title">Assessment Chart</h6>
-                <small>Top Ten (10) Grade</small>
             </div>
              
              <div>

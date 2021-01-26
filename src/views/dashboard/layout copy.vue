@@ -209,7 +209,7 @@
       Site developed and maintain by <a href="https://www.tectainet.com">Tectainet Technologies</a>
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 <a href="https://eduplus.edu.com">Eduplus</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; {{new Date().getFullYear()}} <a href="https://eduplus.edu.com">Eduplus</a>.</strong> All rights reserved.
   </footer>
   </div>
 </template>

@@ -55,7 +55,7 @@
                     <div class="card-bod">
                       <p>
                         <span><i class="fa fa-question"></i></span>
-                        5 QUESTIONS / SUBJECT    <br/>
+                        10 QUESTIONS / SUBJECT    <br/>
                         <span><i class="fa fa-clock"></i></span>
                         1 Hour</p>
 
@@ -74,7 +74,7 @@
                     <div class="card-bod">
                       <p>
                         <span><i class="fa fa-question"></i></span>
-                        5 QUESTIONS / SUBJECT    <br/>
+                        10 QUESTIONS / SUBJECT    <br/>
                         <span><i class="fa fa-clock"></i></span>
                         20 Minutes</p>
  <!-- @click="alertMsg" -->
@@ -103,11 +103,11 @@
                     <div class="card-bod">
                       <p>
                         <span><i class="fa fa-question"></i></span>
-                        5 QUESTIONS / SUBJECT    <br/>
+                        10 QUESTIONS / SUBJECT    <br/>
                         <span><i class="fa fa-clock"></i></span>
                         1 Hour</p>
 
-                        <button @click="optionAlert" class="btn btn-danger">Start Test</button>
+                        <button @click="optionAlert()" class="btn btn-danger">Start Test</button>
                   <br/> <br>
                     </div>
 
@@ -122,7 +122,7 @@
                     <div class="card-bod">
                       <p>
                         <span><i class="fa fa-question"></i></span>
-                        5 QUESTIONS / SUBJECT    <br/>
+                        10 QUESTIONS / SUBJECT    <br/>
                         <span><i class="fa fa-clock"></i></span>
                         20 Minutes</p>
 
@@ -185,25 +185,27 @@ import $ from 'jquery'
          retriveQuestion(){
           
               let sessionData=this.$session.get('user_login');
-         
         //   //  create question 
             
         let assessmentData = {
           'assessmentType':$('#assessmentType').html(),
           'user_id': sessionData.id
           };
+
           this.axios.post(this.$hostname+"junior_api.php?action=generateTableName",assessmentData).then((response)=>{
-   
+      
               this.$session.set('assessmentSession', response.data)
-             
-              
+                           
             let tableName = {'tableName':this.$session.get('assessmentSession')}
             this.axios.post(this.$hostname + 'junior_api.php?action=junior_question', tableName ).then((response)=>{ 
+        
                 this.quest=response.data;
                 this.$session.set('currentTest', this.quest)
-                console.log(this.quest)
+                
                  let params = 'scrollbars=no,resizale=no, status=no,location=no,toolbar=no,menubar=no, fullscreen=yes,width='+screen.width+',height='+screen.height+',left=0,top=0,';
                 open('/assessment','', params);
+
+                
                 
             }).catch(error=>{
               alert(error);
@@ -253,8 +255,7 @@ import $ from 'jquery'
             this.axios.post(this.$hostname + 'primary_api.php?action=primary_question', tableName ).then((response)=>{ 
                 this.quest=response.data;
                 this.$session.set('currentTest', this.quest)
-               
-
+           
                  let params = 'scrollbars=no,resizale=no, status=no,location=no,toolbar=no,menubar=no, fullscreen=yes,width='+screen.width+',height='+screen.height+',left=0,top=0,';
                 open('/primary_assessment','', params);
                 

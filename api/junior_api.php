@@ -52,6 +52,8 @@
     return json_encode($controllerQuery->update_answer($query));
     }
 
+   
+
     if ($action == 'result'){
     $query = json_decode(file_get_contents("php://input"),true); 
     return json_encode($controllerQuery->result($query));

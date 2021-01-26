@@ -146,6 +146,15 @@ Vue.use(VueRouter)
       title: 'Eduplus -- Contact',
     }
   },
+  // verification url
+  {
+    path:'/v_login/:verification_id',
+    name:'v_login',
+    component:login,
+    meta: {
+      title: 'Eduplus -- User Login',
+    }
+  },
   {
     path: '/login',
     name: 'login',

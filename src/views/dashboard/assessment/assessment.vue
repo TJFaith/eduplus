@@ -2,41 +2,19 @@
 <div>
   
   <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light" style="position:fixed; width:100%; height:60px">
-
-   
-    <ul class="navbar-nav" style="position:fixed; width:100%">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+  <div style="position:fixed; width:100%">
+    <nav :class="{'main-header': drawer}"  class="navbar navbar-expand navbar-black navbar-dark p-0">
+     <ul class="navbar-nav d-flex justify-content-between w-100 p-0 m-0">
+       <li class="nav-item">
+        <a class="nav-link"  @click.stop="drawer = !drawer" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
-            <li class="nav-item pt-2 mr-5">
-                <b>Total Questions:</b>
-                
-                <span>
-                    {{totalQuestion}}
-                </span>
-            </li>
-            
-            <li class="nav-item  pt-2 mr-5">
-                    <b>Answerd:</b> <span id="questionAnswerd">{{totalAnswerd}}</span>
-            </li>
-           
-            <li class="nav-item  pt-2 mr-5">
-                    <b>Questions Left:</b> <span id="questionRemain">{{totalLeft}}</span>
-            </li>
-    </ul>
-    
-
-    <!-- Right navbar links -->
-    <ul class="navbar-nav" style="margin-left:45vw">
-      <li class="nav-item" style="width:20vw">
-        <app-timer :timeInterval=timeInterval></app-timer>
+         <li class="nav-item m-1">
+        <button style="border:2px solid red"  class="btn text-red btn-light btn-md submit" @click="submitBtn()">Submit</button>
       </li>
-        
-            <li class="nav-item  user-panel w-100 text-left">
+      <li class="nav-item  user-panel ">
                     <a href="#" class="nav-link">
                          {{userData.name.slice(0, 5)}}
-                      <i class="nav-icon ml-3">
+                      <i class="nav-icon ">
                         <img v-if="userData.user_icon" :src="userData.user_icon" class="img-circle elevation-2-small" alt="User Image">
                         <img v-else src="@/assets/images/profiel.png" class="img-circle elevation-2-small" alt="User Image">
 
@@ -46,44 +24,85 @@
                     </a>
                     
                   </li>
-    </ul> 
+    </ul>
+    </nav>
+  <nav  :class="{'main-header': drawer}" class="navbar navbar-expand navbar-white navbar-light d-flex justify-content-between flex-wrap flex-md-nowrap">
+
+   
+    <ul class="navbar-nav d-flex  ">
+      <!-- <li class="nav-item d-md-none">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a> 
+      </li> -->
+            <li class="nav-item pt-2 mr-5">
+                <b>Total Questions:</b>
+                
+                <span>
+                    {{totalQuestion}}
+                </span>
+            </li>
+            
+            <li class="nav-item  pt-2 mr-5">
+                    <b>Answered:</b> <span id="questionAnswerd">{{totalAnswerd}}</span>
+            </li>
+           
+            <li class="nav-item  pt-2 mr-5">
+                    <b>Questions Left:</b> <span id="questionRemain">{{totalLeft}}</span>
+            </li>
+             
+       
+    </ul>
+    <ul class="navbar-nav d-flex">
+     
+      <li class="nav-item">
+        <app-timer :timeInterval=timeInterval></app-timer>
+      </li>
+       
+    </ul>
+
+    
+   
   </nav>
+  </div>
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4" style="position:fixed">
-    <!-- Brand Logo -->
-    <a href="#" class="brand-link">
-      <img src="@/assets/images/logo.png" alt="Eduplus Logo" class="brand-image"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">Eduplus</span>
-    </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      
-    
-
-      <!-- Sidebar Menu -->
-      <nav style="max-height:90vh">
-        <ul class="nav nav-pills nav-sidebar flex-column" role="menu" data-accordion="false">
-                <p class="brand-link">Question list</p>
+ <v-navigation-drawer v-model="drawer" fixed absolute>
+        
+      <v-list-item>
+        <v-list-item-avatar>
+          <!-- <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img> -->
           
-        
-        
-            <li id="fetch_side_bar">
+                   
+
+                        <v-img src="@/assets/images/logo.png" alt="Eduplus Logo"></v-img>
+
+                       
+        </v-list-item-avatar>
+
+        <v-list-item-content>
+          <v-list-item-title>Eduplus</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+      
+                <span class="mx-4 text-uppercase">Question list</span>
+          
           <!-- start of side bar -->
-              <ol type="1">
+              <ol type="1" class="ml-4" style="margin-bottom:30vh">
 
               <div v-for="(subject, index) in quest.j_subject" :key="index">
                   <br>
                   <div style="color:black; margin-top:3%;background:lightgray">{{subject.subject}}</div> 
                   <div v-for="(question, q_index) in quest.j_question" :key="q_index">
                     
-                      <li v-if="question.subject_id == subject.subject_id" style="cursor:pointer" @click="getQuestion(question.instruction, question.question, question.option, question.my_answer)"> 
+                    <li v-if="question.subject_id == subject.subject_id" style="cursor:pointer" 
+                   
+                    @click="getQuestion(question.instruction, question.question, question.option, question.my_answer) "> 
                         
-                          <span v-if="question.my_answer==''" style="color:red">Not Answerd</span>
-                          <span v-else style="color:#fff">Answerd</span>
+                          <span v-if="question.my_answer==''" style="color:red">Not Answered</span>
+                          <span v-else style="color:green">Answered</span>
                        
                     </li>
                     
@@ -93,51 +112,77 @@
                   
                </ol>
 
-
+            <!-- mobiel sidebar -->
+            
           <!-- end of sidebar -->
            
-            </li>
         
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
+
+       
+    </v-navigation-drawer>
+  
+
+
+
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper pushPageDown2">
-    <div class="content" >
-      <div id="question_section">
+  <div :class="{'content-wrapper': drawer}" class="pushPageDown2">
+    <div class="content h-100" >
+      <div id="question_section" >
+        {{testMobile}}
         <!-- instruction -->
         <div class="mb-3" v-for="(inst, i) in instruction" :key="i"> <div><b><span v-html="inst.instruction"></span></b></div></div>
         <hr>
-
         <!-- main question -->
            <div class="mt-3" v-html="questionToDisplay"></div>
-          
            <!-- objective -->
            <div class="objective">
+             
                <ol type="A">
                 <div v-for="(opt, o_index) in options" :key="o_index">
-                  <div  class="option">
-                    <div  @click="selectedOption(opt.option_id, opt.question_id)" style="padding-right:2vw">
-                      <input type="radio" :name="opt.question_id"  :value="opt.option_id" v-model="answer">
+                  <div class="option w-100">
+                    <div @click="selectedOption(opt.option_id, opt.question_id)">
+                      <!-- v-html="opt.options" -->
+                    <li >
+                      <input type="radio" :name="opt.question_id" class="mr-2" @click="changeColor"  :value="opt.option_id" v-model="answer">
+                      <span  v-html="opt.options"></span>
+                    </li>
                     </div>
-                    <li v-html="opt.options"></li>
-                 
+                    
                   </div>
                   
                 </div>
              </ol>
            </div>
-           
 
       </div>
-     
-      <div style="position:absolute; left:90vw;">
-        <button class="btn btn-dark btn-lg submit" @click="submitBtn()">Submit</button>
-        </div>
+     <div class="fixed-bottom bg-primary w-100 pt-4 d-xl-none">
+  
+                <v-pagination
+                 
+                  v-model="questionNumber"
+                  :length="totalQuestion"
+                  @input="mobileQuestion(questionNumber)"
+                  :value="questionNumber"
+                  :color="pageBTN"
+                  :class="questionNumber"
+                  :id="questionNumber"
+                ></v-pagination>
+             
+             <!-- Main Footer -->
+  <footer :class="{'main-footer-2':drawer}" class="main-footer" >
+    <!-- To the right -->
+    <div class="float-right d-none d-sm-inline">
+      Site developed and maintain by <a href="https://www.tectainet.com">Tectainet Technologies</a>
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; {{new Date().getFullYear()}} <a href="https://eduplus.edu.com">Eduplus</a>.</strong> All rights reserved.
+  </footer>
+
+     </div>
+    
+   
+        
     <br/><br/>
     </div>
   </div>
@@ -146,13 +191,13 @@
 
 
   <!-- Main Footer -->
-  <footer class="main-footer">
+  <footer :class="{'main-footer-2':drawer}" class="main-footer d-none d-md-block" >
     <!-- To the right -->
     <div class="float-right d-none d-sm-inline">
       Site developed and maintain by <a href="https://www.tectainet.com">Tectainet Technologies</a>
     </div>
     <!-- Default to the left -->
-    <strong>Copyright &copy; 2019 <a href="https://eduplus.edu.com">Eduplus</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; {{new Date().getFullYear()}} <a href="https://eduplus.edu.com">Eduplus</a>.</strong> All rights reserved.
   </footer>
 </div>
 
@@ -167,6 +212,9 @@ import {bus} from '../../../main';
 export default {
   data(){
       return{
+        pageBTN:"green",
+         drawer: null,
+         questionNumber:1,
         quest:{},
         instruction:'',
         questionToDisplay:"",
@@ -182,26 +230,50 @@ export default {
         userData:{},
         user_name:'',
         timerCountDown:null,
-        timeInterval:null
+        timeInterval:null,
+        testMobile:null
 
       }
   },
+  computed:{
+    changeColor(){
+      return true;
+       
+    }
+  },
   methods:{
     getID(){
-  
+  console.log(this.quest)
      this.quest=this.$session.get('currentTest');
       this.totalQuestion = this.quest.j_question.length;
       this.totalLeft = this.quest.j_question.length;
       this.timeInterval = this.quest.timeInterval;
    
     },
-    getQuestion(inst,question,option, my_answer){
+    mobileQuestion(q_index){
+    
+      this.instruction = this.quest.j_question[q_index-1].instruction
+      this.questionToDisplay = this.quest.j_question[q_index-1].question
+      this.options = this.quest.j_question[q_index-1].option
+      this.answer = this.quest.j_question[q_index-1].my_answer
+      // this.testMobile = this.$vuetify.pagination.ariaLabel.page
 
+      // quest.j_subject
+  // quest.j_question
+    },
+    getQuestion(inst,question,option, my_answer){
       // instruction
       this.instruction = inst
       this.questionToDisplay = question
       this.options = option
       this.answer = my_answer
+        if(this.$vuetify.breakpoint.mdAndUp){
+      this.drawer = true
+        }else{
+      this.drawer = false
+
+        }
+
     },
    selectedOption(optionID, q_ID){
      
@@ -304,10 +376,18 @@ let title2
 #question_section{
   padding-top:6rem;
   margin:3rem;
-  height:60vh
+  min-height:60vh
 }
 .option{
-  display: flex;
+  display: inline-block;
   
+}
+.mobile-sidebar{
+  position: fixed;
+  background-color: darkslategray;
+}
+
+body{
+  overscroll-behavior-y: contain;
 }
 </style>

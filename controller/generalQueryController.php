@@ -49,7 +49,7 @@ class generalQueryController
     }   
 }
 
-private function getUserID($email){
+protected function getUserID($email){
 //    echo $email;
    return $user_id = User::where('email',$email)->get();
 
@@ -62,29 +62,7 @@ public function getUserEmail($email){
     
 }
 
-// Authentication
-public function signup($data){
-    //   Check if email exist
-    $email = User::where('email', $data['email'])->get();
-    if (!$email ->count() ){
-        $signup = new User;
-        $signup -> name = $data['name'];
-        $signup -> email = $data['email'];
-        $signup -> password = password_hash($data['password'], PASSWORD_BCRYPT);
-        if($signup -> save()){
-            echo json_encode(array(
-                'respond'=>'saved',
-                'user_id'=>$this->getUserID($data['email'])
-            ));
-        }
-    }else{
-        echo json_encode(array(
-            'respond'=>'Exist',
-        ));
-        
-    }
-      
-}
+
 
 public function updatePassword($data){
     // echo json_encode($data);
@@ -103,6 +81,7 @@ public function updatePassword($data){
 }
 public function login($data){
     $respons ='';
+    // check if email is confirmd 
     $aut = User::where('email', $data['email'])->get();
     if (!count($aut)) {
         // $html_doc->title = "testtitle";
@@ -121,9 +100,24 @@ public function login($data){
             }
         }
     }
+    $verification_id='';
+    if (isset($data['verification_id'])){
+        $d_verification_id = User::select('confirmation')->where('email', $data['email'])->where('confirmation', $data['verification_id'])->get();
+        if(count($d_verification_id )) {
+           User::where('email', $data['email'])->update([
+                'confirmation'        =>  '',
+                'updated_at'            => date('Y-m-d H:i:s')
+                
+        ]);
+        }else{
+            $verification_id=2;
+        }
+        
+    }
     echo json_encode(array(
         'respond'=>$respons,
         'user_data'=>$aut,
+        'verification_id'=> $verification_id
     ));
 }
 

@@ -9,6 +9,9 @@ import bootstrap from 'bootstrap-vue'
 import GoogleSignInButton from 'vue-google-signin-button-directive'
 import VueSweetalert2 from 'vue-sweetalert2';
 import quillEditor from 'vue-quill-editor'
+import VueTelInputVuetify from 'vue-tel-input-vuetify/lib';
+import Vuelidate from 'vuelidate'
+
 
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
@@ -21,8 +24,11 @@ Vue.use(VueSession)
 Vue.use(bootstrap)
 Vue.use(VueSweetalert2)
 Vue.use(quillEditor)
+Vue.use(Vuelidate)
 
-
+Vue.use(VueTelInputVuetify, {
+  vuetify,
+});
 // Vue.use(adminLte)
 
 
@@ -35,6 +41,8 @@ import  loader from './components/loader.vue'
 import  timer from './components/timer.vue'
 import  new_comunity from './components/new_comunity.vue'
 import  resourceDialog from './components/resourceDialog.vue'
+import terms from './components/terms.vue'
+import snackbar from './components/snackbar.vue'
 
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -54,6 +62,8 @@ Vue.component('app-loader', loader)
 Vue.component('app-timer', timer)
 Vue.component('new-comunity', new_comunity)
 Vue.component('resource-dialog', resourceDialog)
+Vue.component('app-terms', terms)
+Vue.component('app-snackbar', snackbar)
 
 // Include jQuery
 window.$ = window.jQuery = require("jquery");
@@ -65,17 +75,16 @@ require('@/assets/plugins/jquery/jquery.min.js')
 require('@/assets/dist/js/adminlte.min.js')
 
 
-
 // Global variables
 export const bus = new Vue();
-// Vue.prototype.$hostname = "http://localhost/MY_WEB_WORKS/eduplus_new/front.eduplus/api/";
-Vue.prototype.$hostname = 'https://eduplus.sch.ng/api/';
-
+Vue.prototype.$hostname = "http://localhost/MY_WEB_WORKS/eduplus_new/front.eduplus/api/";
+// Vue.prototype.$hostname = 'https://eduplus.sch.ng/api/';
 
 
 new Vue({
   GoogleSignInButton,
   router,
   vuetify,
+  mode: 'history',
   render: h => h(App)
 }).$mount('#app')

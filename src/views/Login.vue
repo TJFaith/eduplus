@@ -7,6 +7,7 @@
                 <div class="card">
                     <div class="card-header"><i class="fa fa-user"></i>Login</div> 
                     <div class="card-body">
+                         <v-alert  color="#C51162" v-if="errorMessage" dark type="warning" border="right" > {{errorMessage}} </v-alert>
                         <form @submit.prevent="login()">
 
                             <div class="from-group row">
@@ -79,7 +80,8 @@ export default {
             showLoading:false,
             login_data:{},
             login_response:'',
-             clientId: '444741050365-iv78pe1mmrkbll31t888vpvundu44phg.apps.googleusercontent.com'
+             clientId: '444741050365-iv78pe1mmrkbll31t888vpvundu44phg.apps.googleusercontent.com',
+             errorMessage:false
 
         }
     },
@@ -135,21 +137,35 @@ export default {
         alert(error)
         },
         login(){
+           
+           
+            
             this.showLoading = true;
+            if(this.$route.params.verification_id != undefined){
+                this.login_data.verification_id=this.$route.params.verification_id
+            }
+           
             this.axios.post(this.$hostname+"general_api.php?action=login", this.login_data).then((response)=>{
+                
        
                 if(response.data.respond !='success'){
                     this.showLoading = false;
                 this.login_response = response.data.respond
                 }else{
                 this.login_response = ''
+                let user_data = response.data.user_data[0]
+                user_data.verification_id = response.data.verification_id
                  this.$session.start()
-                 this.$session.set('user_login', response.data.user_data[0])
+                 this.$session.set('user_login', user_data )
                  bus.$emit('login_status', {'login_status':true, 'user_id':response.data.user_data[0].id, 'user_name':response.data.user_data[0].name});
               if(this.$session.has('postPage')){
                   window.location = this.$session.get('postPage')
                   this.$session.remove('postPage')
               }else{
+                  if(response.data.verification_id == 2){
+                      this.errorMessage ='Invalid Verification Id, Please click on login and login with your signed up email and password, then go to user account to resend verification ID'
+                  }
+                //   console.log(this.$session.get('user_login'))
               window.location = '/dashboard'; 
 
               }

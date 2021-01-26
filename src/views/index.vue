@@ -127,12 +127,17 @@ It is pertinent to know that  the polemic between the children’s inner strengt
              <p>Get started with your educational career by joining a community from a wide variety of community list on our system, by so doing you can meet up with your colleague  and share educational materials to help build and enhance your educational career. <br/>
               You can as well create a community for your school or ward, just to bring your pair sets together and for educational purposes</p>
            </div>
-           <div class="col-md-4">
+           <div class="col-md-4 text-justify">
               <i class="fas fa-book-reader"></i><br/><br/>
              <h5>EXAMINATION ASSESSMENT</h5>
-             <p>You can practice entrance examination on our platform, so as to test your ability and knowledge on various subjects, also this helps to determine which class or department you should belong to in your academic pursuit. <br/>
-              You can also take live entrance exams on our platform.
-            </p>
+             <ul >
+               <li>You can practice entrance examinations on our platform</li>
+               <li>Test your ability and knowledge on various subjects</li>
+               <li>Determine which class or department you should belong to in your academic pursuit.</li>
+               <li>You can also take live entrance examinations on our platform.</li>
+               </ul>
+          
+
            </div>
            <div class="col-md-4">
               <i class="fa fa-book"></i><br><br>

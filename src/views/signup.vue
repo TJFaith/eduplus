@@ -1,129 +1,244 @@
 <template>
 <div>
       <app-header/>
-
+      <!-- ERROR ALERT -->
+      <!-- <div v-if="showSnackbarAlert"> -->
+        <app-snackbar :message=errorMessage :showSnackbarAlert=showSnackbarAlert></app-snackbar>
+        <!-- </div> -->
+      <!-- END OF ERRO ALERT -->
+    <div class="pageWrapper">
         <div class="container pushPageDown">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" v-if="signUp==false">
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="bg-white card">
                         <div class="card-header">Sign Up</div> 
                         <div class="card-body">
-                            <form @submit.prevent="signup()">
-                                <div class="form-group row">
-                                    <label for="name" class="col-md-4 col-form-label text-md-right">Name</label> 
-                                    <div class="col-md-6">
-                                        <input id="name" type="text" name="name" v-model="signup_data.name" required="required" autocomplete="name" class="form-control ">
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="form-group row">
-                                        <label for="email" class="col-md-4 col-form-label text-md-right">E-Mail Address</label> 
-                                        
-                                        <div class="col-md-6">
-                                            <input id="email" type="email" name="email" v-model="signup_data.email" @keyup="confirm_email=''" required="required" autocomplete="email" class="form-control ">
-                                            <span class="text-danger">{{confirm_email}}</span>
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="form-group row">
-                                        <label for="password" class="col-md-4 col-form-label text-md-right">Password </label> 
-                                        <div class="col-md-6">
-                                          <i><small class="text-danger">Length should be six characters or more</small></i>
-                                            <input @keyup="confirmPassword(signup_data.password, signup_data.c_password)" id="password" v-model="signup_data.password"  type="password" name="password" required="required" autocomplete="new-password" class="form-control" minlength="6">
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="form-group row">
-                                        <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label> 
-                                        <div class="col-md-6">
-                                            <input @keyup="confirmPassword(signup_data.password, signup_data.c_password)" id="password-confirm" v-model="signup_data.c_password"  type="password" name="password_confirmation" required="required" autocomplete="new-password" class="form-control">
-                                            <span class="text-danger">{{passwordMissmatch}}</span>
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="form-g9roup row mb-0"><div class="col-md-6 offset-md-4">
-                                        <button type="submit" :disabled="show_loader" class="btn btn-primary w-25">
-                                            <!-- <i class="fa fa-spinner fa-spin"></i> -->
-                                            <div v-if="show_loader"><small>Please Wait.....</small> </div>
-                                            <div v-else>Sign Up</div>
-                                        </button> <a href="#" class="btn btn-danger bg-danger">Sign Up with Google</a>
-                                    </div>
+                          
+                            <form>
+                                <v-text-field v-model="name" :error-messages="nameErrors"  label="Name" required @input="$v.name.$touch()" @blur="$v.name.$touch()" ></v-text-field>
+                                
+                                <v-text-field @keydown.once="checkMail=''" v-model="email" :error-messages="emailErrors" label="E-mail" required @input="$v.email.$touch()"
+                                @blur="$v.email.$touch()" ></v-text-field>
+                                
+                                 <v-text-field type="password" :counter="6" v-model="password" :error-messages="passwordErrors" label="password" required @input="$v.password.$touch()"
+                                @blur="$v.password.$touch()" ></v-text-field>
+
+                                <v-text-field type="password"  v-model="cpassword" :error-messages="cpasswordErrors" label="Confirm Password" required @input="$v.cpassword.$touch()"
+                                @blur="$v.cpassword.$touch()" ></v-text-field>
+
+                                  <vue-tel-input-vuetify required  :error-messages="phoneErrors" @input="$v.phone.$touch()" @blur="$v.phone.$touch()" v-model="phone"></vue-tel-input-vuetify>
+                                
+                                <v-select v-model="gender" :items="items" :error-messages="genderErrors" label="Gender" required @change="$v.gender.$touch()" @blur="$v.gender.$touch()" ></v-select>
+
+                                <div class="d-flex align-center">
+                                    <v-checkbox
+                                      v-model="checkbox"
+                                      :error-messages="checkboxErrors"
+                                      label="Agree to our terms"
+                                      required
+                                      @change="$v.checkbox.$touch()"
+                                      @blur="$v.checkbox.$touch()"
+                                    ></v-checkbox>
+                                    <v-chip @click="showTerms = !showTerms" class="ma-2" label>Temrs and Conditon</v-chip>
                                 </div>
-                            </form>
+ <!-- :disabled="show_loader" -->
+    <v-btn
+    
+      class="mr-4"
+      @click="submit"
+    >
+       <div v-if="show_loader">
+           <v-progress-circular color="primary"  :size="20"  indeterminate></v-progress-circular>
+         <small class="text-primary"> Signing Up, Please Wait.....</small> </div>
+                                            <div v-else>Sign Up</div>
+    </v-btn>
+
+   
+                                        
+    <v-btn class="btn-danger bg-danger">
+      Sign Up with Google
+    </v-btn>
+  </form>
                         </div>
                     </div>
                 </div>
             </div>
+
+        <!-- CONFIRM EMAIL NOTIFICATION -->
+        <div style="text-align:center;margin-top:20vh" class="text-white" v-if="signUp">
+        <h3>THANK YOU FOR SIGNING UP WITH EDUPLUS, CHECK YOUR EMAIL TO CONFIRM YOUR REGISTRATION</h3>
+       
+
+        <br>
+        <v-btn btn-lg color="green" text><a href="/login"> Login to your dashboard >></a></v-btn>
+</div>
+
+
+        </div>
         </div>
     <app-footer/>
+     
+     <!-- ADDON TO FORM -->
+     <app-terms :showTerms=showTerms></app-terms>
+
 
     </div>
 </template>
 
 <script>
 import { bus } from '../main';
+ 
 
-export default {
+ import { validationMixin } from 'vuelidate'
+  import { required, email, minLength } from 'vuelidate/lib/validators'
+//  maxLength,
+  export default {
+    mixins: [validationMixin],
+
+    validations: {
+      name: { required },
+      password: { required, minLength: minLength(6) },
+      cpassword: { required, minLength: minLength(6) },
+      email: { required, email },
+      phone: { required },
+      gender: { required },
+      checkbox: {
+        checked (val) {
+          return val
+        },
+      },
+    },
+
+
     data(){
         return{
-            signup_data:{},
+            otp:'',
+            errorMessage:'',
+            showSnackbarAlert:false,
+            showTerms:false,
+            
+            signUp:false,
             show_loader:false,
-            confirm_email:'',
-            passwordMissmatch:''
+
+
+            name: '',  email: '', password:'',  cpassword:'', gender: null,  checkbox: false, phone:null,
+                  items: [
+                      'Male',
+                      'Female',
+                      'Corss Gender',
+                  ],
+            checkMail:'',
 
         }
     },
-    methods:{
-        confirmPassword(pass1, pass2){
-            if(pass2 == undefined){
-                this.passwordMissmatch =''
-            }else{
-                 if(pass1 != pass2){
-                    this.passwordMissmatch = 'password does not match'
-                    }else{
-                        this.passwordMissmatch =''
-                }
-            }
-           
-        },
-        signup(){
-            if(this.passwordMissmatch =='' && this.signup_data.c_password != undefined){
-            this.show_loader =true;
-                this.axios.post(this.$hostname+"general_api.php?action=signup", this.signup_data).then((response)=>{
-              
-                   let res = response.data;
-                   if(res.respond == "Exist"){
-                   this.confirm_email ="Account with this email exist please login"
-                    this.show_loader =false;
-
-                   }else if(res.respond =="saved"){
-                     
-                       this.signup_data={}
-                        this.show_loader =false;
-                        this.$session.start()
-                        this.$session.set('user_login', res.user_id[0])
-                        bus.$emit('login_status', {'login_status':true, 'user_id':res.user_id[0].id, 'user_name':res.user_id[0].name});
-                      window.location = '/dashboard'; 
-
-                        // this.$router.push({path:'/dashboard'})
-                   }
-                }).catch(error=>{
-                    alert(error);
-                    this.show_loader =false;
-                })
-            }else{
-                    this.show_loader =false;
-                this.passwordMissmatch='Please confirm password before proceding '
-            } 
-        }
-    },
-    computed:{
+    computed: {
+        nameErrors () {
+        const errors = []
+        if (!this.$v.name.$dirty) return errors
+        !this.$v.name.required && errors.push('Name is required.')
+        return errors
+      },
+      checkboxErrors () {
+        const errors = []
+        if (!this.$v.checkbox.$dirty) return errors
+        !this.$v.checkbox.checked && errors.push('You must agree to continue!')
+        return errors
+      },
+      genderErrors () {
+        const errors = []
+        if (!this.$v.gender.$dirty) return errors
+        !this.$v.gender.required && errors.push('Item is required')
+        return errors
+      },
     
+      phoneErrors (){
+        const errors = []
+        if (!this.$v.phone.$dirty) return errors
+        !this.$v.phone.required && errors.push('Telephone Number is required')
+        return errors
+      },
+      emailErrors () {
+        const errors = []
+        if (!this.$v.email.$dirty) return errors
+        !this.$v.email.email && errors.push('Must be valid e-mail')
+        !this.$v.email.required && errors.push('E-mail is required')
+        if(this.checkMail == 'Exist'){
+          errors.push('Email already exist, please login instead')
+        }
+        return errors
+      },
+       passwordErrors () {
+        const errors = []
+        if (!this.$v.password.$dirty) return errors
+        !this.$v.password.minLength && errors.push('password must be at most 6 characters long')
+        !this.$v.password.required && errors.push('password is required')
+        return errors
+      },
+       cpasswordErrors () {
+        const errors = []
+        if (!this.$v.cpassword.$dirty) return errors
+        !this.$v.cpassword.required && errors.push('please confirm your password')
+        if(this.$v.cpassword.$model != this.$v.password.$model){ errors.push('Password Missmatch')}
+        return errors
+        
+      },
+     
     },
+
+    methods:{
+        submit () {
+        this.$v.$touch()
+        if(this.$v.$error == false){
+          this.submitForm();
+          this.show_loader=true
+        }
+          
+      },
+      submitForm(){
+        let user_data ={'name': this.name,  'email': this.email, 'password':this.password,  'gender': this.gender, 'phone':this.phone,}
+          
+          this.axios.post(this.$hostname+"general_api.php?action=signup", user_data).then((response)=>{
+            console.log(response)
+              if(response.data.respond== 'Exist'){
+                this.checkMail = 'Exist'
+                this.show_loader=false
+              }else if(response.data.respond == 'saved'){
+                this.signUp=true
+
+                this.show_loader=false
+              }else{
+                this.errorMessage=response.data
+                this.showSnackbarAlert=true
+                this.show_loader=false
+              }
+        }).catch(error=>{
+            this.show_loader=false
+            this.errorMessage=error
+            this.showSnackbarAlert=true
+
+        })
+      
+      },
+     
+      clear () {
+        this.$v.$reset()
+        this.name = ''
+        this.email = ''
+        this.gender = null
+        this.checkbox = false
+      },
+
+    },
+    
       mounted(){
          if(this.$session.has('user_login')){
             this.$router.push({path:'/dashboard'}).catch(()=>{});
          }
+    },
+    created(){
+       bus.$on('showTerms', (data) => {
+      this.showTerms = data;
+    })
     }
 }
 </script>
@@ -131,6 +246,18 @@ export default {
 <style scoped>
     .loginBox{
         margin-top: 8rem;
+    }
+
+    .pageWrapper{
+      padding-top: 1rem;
+      background: 
+    /* top, transparent red */ 
+    linear-gradient(
+      rgba(61, 142, 196, 0.788), 
+      rgba(255, 255, 255, 0.966)
+    ),
+    /* bottom, image */
+    url('~@/assets/images/signUpBG.jpg');
     }
    
 </style>

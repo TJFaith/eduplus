@@ -59,7 +59,7 @@ $controllerQuery = new generalQueryController();
     if ($action == 'signup'){
 
         $query = json_decode(file_get_contents('php://input'),true);
-        return json_encode($controllerQuery->signup($query));
+        return json_encode($email->signup($query));
     }
     
     if ($action == 'login'){
@@ -158,9 +158,7 @@ $controllerQuery = new generalQueryController();
         return json_encode($controllerQuery->updatePassword($query));
     }
     // API QUERY CONNECTIONS =============== -->
-
-    // Career Communities
-   
-   
+    
+    
    
 ?>

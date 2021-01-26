@@ -15,7 +15,7 @@ require '../vendor/autoload.php';
 
 // Instantiation and passing `true` enables exceptions
 
-class php_mail{
+class php_mail extends generalQueryController{
    private $mail;
 private function emailConfig(){
         $this->mail = new PHPMailer(true);
@@ -43,14 +43,12 @@ private function generateId(){
     //  return $token = $token.$current_date;
  }
 public function email($data){
-
-
             $this->emailConfig();
-
             //Recipients
             $mail->setFrom($data['email'], $data['fullName']);
             $mail->addReplyTo($data['email']);
             $mail->addAddress('info@eduplus.sch.ng', 'EDUPLUS');     // Add a recipient
+            $mail->addAddress('enquiries@eduplus.sch.ng', 'EDUPLUS');     // Add a recipient
             // $mail->addAddress('ellen@example.com');               // Name is optional
             // $mail->addReplyTo('info@example.com', 'Information');
             // $mail->addCC('cc@example.com');
@@ -178,6 +176,83 @@ public function email($data){
             }
 
         }
+        protected $confirmationURL;
+        private function confirm_email($data){
+            $respons ='';
+            $this->emailConfig();
+            $this->confirmationURL = $this->generateId();;
+
+                $userEmail = $data['email'];
+                $userFullName = $data['name'];
+                $this->mail->setFrom('mailer@tectainet.com', 'EDUPLUS');
+                $this->mail->addReplyTo($userEmail);
+                $this->mail->addAddress($userEmail, $userFullName);   
+                $this->mail->isHTML(true);                                  // Set email format to HTML
+                $this->mail->Subject = 'EMAIL CONFIRMATION';
+                $this->mail->Body    = 'Hello '. $userFullName . ', thanks for sigining up with EDUPLUS, <br>
+                please click the bellow button to verify your email <br>
+                <a href="https://www.eduplus.sch.ng/v_login/'.$this->confirmationURL.'"><button>Verify Email</button></a>
+                <p><strong>You recive this email because you attempt to sign up with Eduplus, if you are not the one please file a report on this page <a href="https://www.eduplus.sch.ng/contact">Eduplus Contact</a></strong></p>
+                <p>Thanks</p>
+                ';
+            try {
+                $this->mail->send();
+              
+                return $respons = 1;
+                } catch (Exception $e) {
+                   return $respons= 2;
+                }
+
+                // Error, otp not sent, try again"
+        //    echo json_encode(array(
+        //     'respond'=>$respons,
+        // ));
+    }
+
+        // Authentication
+public function signup($data){
+    //   Check if email exist
+    $email = User::where('email', $data['email'])->get();
+
+    if (!$email ->count() ){
+        // send email 
+        $verifyEmail = $this->confirm_email($data);
+
+        if ($verifyEmail == 1){
+            // send confirmation to email
+            // return json_encode($email->confirm_email($data));
+            
+            $signup = new User;
+            $signup -> name = $data['name'];
+            $signup -> email = $data['email'];
+            $signup -> password = password_hash($data['password'], PASSWORD_BCRYPT);
+            $signup -> gender = $data['gender'];
+            $signup -> phone = $data['phone'];
+            $signup -> confirmation = $this->confirmationURL;
+            if($signup -> save()){
+                echo json_encode(array(
+                    'respond'=>'saved',
+                    'user_id'=>$this->getUserID($data['email'])
+                ));
+            }
+        }else if($verifyEmail == 2){
+            echo $respons= "Message could not be sent. Check your internet Connection and retry";
+            
+        }
+        }else{
+            echo json_encode(array(
+                'respond'=>'Exist',
+            ));
+        }
+   
+       
+}
+
+
+
+
+
+        
 }
 
 ?>

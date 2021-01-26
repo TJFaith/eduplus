@@ -1,6 +1,7 @@
 module.exports = {
   "publicPath": "/",
   "transpileDependencies": [
-    "vuetify"
+    "vuetify",
+    "vue-tel-input-vuetify"
   ]
 }
